@@ -297,6 +297,222 @@ body.scroll-lock .container_nav {
     width: 20px;
     height: 20px;
 }
+
+/* OFFER */
+.container_offer {
+    padding: calc(var(--header-h) + var(--subnav-h) + 12px) 0 12px;
+}
+
+.container_offer .container {
+    padding-inline: 20px;
+}
+
+.container_offer_box {
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    background: #000;
+    padding: 14px 16px;
+    text-align: center;
+}
+
+.container_offer_kicker{
+
+    margin: 0 0 4px;
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.container_offer_text {
+    margin: 0 0 12px;
+    color: #fff;
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.container_offer_row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.container_offer_code {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 47px;
+    padding: 0 16px;
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    background: transparent;
+}
+
+.container_offer_code_label{
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform:uppercase;
+}
+
+.container_offer_code_value {
+    color: var(--gold);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.container_offer .btn {
+    min-height: 47px;
+}
+@media (min-width: 640px) {
+    .container_offer_row {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container_offer_code,
+    .container_offer .btn {
+        min-width: 220px;
+    }
+}
+
+
+/* SLIDER */
+.container_slider {
+    padding-top: 0;
+}
+
+.wrapper_slider {
+    position: relative;
+}
+
+.wrapper_slider_viewport {
+    overflow: hidden;
+}
+
+.wrapper_slider_track{
+    display:flex;
+    transition: transform 0.5s ease;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    will-change:transform;
+}
+
+.item_slide {
+    flex: 0 0 100%;
+    max-width: 100%;
+    position: relative;
+}
+
+.item_slide_img {
+    object-fit: cover;
+    object-position: 50% 50%;
+    aspect-ratio: 2 / 1;
+    width: 100%;
+}
+
+.item_slide_cta {
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    text-align: center;
+    position: absolute;
+}
+
+.item_slide_cta .btn {
+    min-width: 150px;
+}
+
+.wrapper_slider_arrow {
+    transform: translateY(-50%);
+    width: 34px;
+    line-height: 1;
+    z-index: 10;
+    opacity: 0;
+    height: 54px;
+    font-size: 38px;
+    transition: opacity var(--ease);
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    color: #fff;
+}
+
+.wrapper_slider:hover .wrapper_slider_arrow,
+.wrapper_slider_arrow:focus-visible {
+    opacity: 0.75;
+}
+
+.wrapper_slider_arrow:hover {
+    opacity:1;
+}
+
+.wrapper_slider_arrow_prev {
+    left: 4px;
+}
+
+.wrapper_slider_arrow_next {
+    right: 4px;
+}
+
+.wrapper_slider_progress {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    gap: 0;
+    border-right: 1px solid var(--gold);
+}
+
+.wrapper_slider_seg {
+    overflow: hidden;
+    min-width: 0;
+    cursor: pointer;
+    display: block;
+    border: 0;
+    border-left: 1px solid var(--gold);
+    position: relative;
+    padding: 0;
+    height: 10px;
+    flex: 1 1 0;
+    background: var(--nav-bg);
+}
+
+.wrapper_slider_fill {
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: var(--gold);
+    position: absolute;
+    inset: 0;
+}
+
+.wrapper_slider_seg.active .wrapper_slider_fill {
+    animation: seg-fill var(--slide-duration) linear forwards;
+}
+
+.paused .wrapper_slider_seg.active .wrapper_slider_fill {
+    animation-play-state: paused;
+}
+
+@keyframes seg-fill {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
 @media (min-width: 600px) {}
 @media (min-width: 720px) {}
 @media (min-width: 900px) {}
