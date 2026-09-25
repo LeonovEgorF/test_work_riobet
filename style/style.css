@@ -703,6 +703,114 @@ body.scroll-lock .container_nav {
     max-width: 100%;
 }
 
+/* WINNERS */
+.container_winners_inner {
+    padding: 0 10px;
+}
+
+.container_winners_slider {
+    position: relative;
+}
+
+.container_winners_track {
+    padding: 0 0 4px;
+    display: flex;
+    gap: 7px;
+    scrollbar-width: none;
+    overflow-x: auto;
+    list-style: none;
+    overscroll-behavior-x: contain;
+    margin: 0;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+
+.container_winners_track::-webkit-scrollbar {
+    display: none;
+}
+
+.item_winner {
+    text-align: center;
+    scroll-snap-align: start;
+    flex: 0 0 calc((100% - 7px) / 2);
+}
+
+.item_winner_player {
+    text-decoration: underline;
+    margin: 0;
+    color: #fff;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.item_winner_row {
+    font-size: 15px;
+    margin: 0;
+    color: #fff;
+    line-height: 1.65;
+}
+
+.item_winner_row_bet {
+    padding-top: 5px;
+}
+
+.item_winner_row_mult {
+    padding-bottom: 5px;
+}
+
+.item_winner_row span {
+    color: var(--gold);
+    font-size: 17px;
+    padding-left: 8px;
+}
+
+.item_winner_sum {
+    color: var(--gold);
+    margin: 0;
+    padding-bottom: 14px;
+    line-height: 26px;
+    font-size: 30px;
+}
+
+.container_winners_arrow {
+    font-size: 34px;
+    top: 40%;
+    transition: opacity var(--ease), background-color var(--ease);
+    opacity: 0;
+    cursor: pointer;
+    line-height: 1;
+    background: rgba(0, 0, 0, 0.55);
+    height: 54px;
+    position: absolute;
+    border: 0;
+    padding: 0;
+    z-index: 5;
+    color: #fff;
+    width: 34px;
+}
+
+.container_winners_slider:hover .container_winners_arrow,
+.container_winners_arrow:focus-visible {
+    opacity: 0.85;
+}
+
+.container_winners_arrow:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.container_winners_arrow_prev {
+    left: 0;
+}
+
+.container_winners_arrow_next {
+    right: 0;
+}
+
+.container_winners_arrow[hidden] {
+    display: none;
+}
+
 @media (min-width: 600px) {}
 @media (min-width: 720px) {}
 @media (min-width: 900px) {}

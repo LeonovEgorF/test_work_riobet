@@ -361,6 +361,102 @@ const keepFocusInsideModal = (event, modal) => {
 //     }
 // };
 
+const initWinners = () => {
+    const block = document.getElementById('winners');
 
+    if (!block) {
+        return;
+    }
+
+    const track = document.getElementById('winners-track');
+    const prevBtn = document.getElementById('winners-prev');
+    const nextBtn = document.getElementById('winners-next');
+    let timer = null;
+
+    const getCardScrollStep = () => {
+        const card = track.firstElementChild;
+
+        return card ? card.getBoundingClientRect().width + 7 : 0;
+    };
+    const getMaxScrollLeft = () => {
+        return track.scrollWidth - track.clientWidth;
+    };
+    const syncWinnerArrows = () => {
+        const overflow = getMaxScrollLeft() > 2;
+        prevBtn.hidden = !overflow;
+        nextBtn.hidden = !overflow;
+    };
+    const scrollWinnersByCard = (dir) => {
+        let left = track.scrollLeft + dir * getCardScrollStep();
+
+        if (dir > 0 && track.scrollLeft >= getMaxScrollLeft() - 2) {
+            left = 0;
+        } else if (dir < 0 && track.scrollLeft <= 2) {
+            left = getMaxScrollLeft();
+        }
+
+        track.scrollTo({ left: left, behavior: 'smooth' });
+    };
+    const startWinnersAutoScroll = () => {
+        clearInterval(timer);
+        timer = setInterval(() => {
+            scrollWinnersByCard(1);
+        }, 4000);
+    };
+    const stopWinnersAutoScroll = () => {
+        clearInterval(timer);
+        timer = null;
+    };
+
+    const handleWinnersPreviousClick = () => {
+        scrollWinnersByCard(-1);
+        startWinnersAutoScroll();
+    };
+
+    const handleWinnersNextClick = () => {
+        scrollWinnersByCard(1);
+        startWinnersAutoScroll();
+    };
+
+    const handleWinnersVisibilityChange = () => {
+        document.hidden ? stopWinnersAutoScroll() : startWinnersAutoScroll();
+    };
+
+    prevBtn.addEventListener('click', handleWinnersPreviousClick);
+    nextBtn.addEventListener('click', handleWinnersNextClick);
+    block.addEventListener('mouseenter', stopWinnersAutoScroll);
+    block.addEventListener('mouseleave', startWinnersAutoScroll);
+    block.addEventListener('focusin', stopWinnersAutoScroll);
+    block.addEventListener('focusout', startWinnersAutoScroll);
+    track.addEventListener('touchstart', stopWinnersAutoScroll);
+    document.addEventListener('visibilitychange', handleWinnersVisibilityChange);
+    window.addEventListener('resize', syncWinnerArrows);
+
+    const cardObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+
+                if (!entry.isIntersecting) {
+                    return;
+                }
+
+                const img = entry.target.querySelector('img[data-src]');
+                loadImageFromData(img);
+                cardObserver.unobserve(entry.target);
+            });
+        },
+        { root: track, rootMargin: '0px 80px' },
+    );
+
+    Array.from(track.children).forEach((card) => {
+        if (card.querySelector('img[data-src]')) {
+            cardObserver.observe(card);
+        }
+    });
+
+    syncWinnerArrows();
+    startWinnersAutoScroll();
+};
 initSlider();
 initGames()
+initWinners();
