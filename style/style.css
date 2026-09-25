@@ -29,6 +29,15 @@
     --ease: 0.3s ease;
     --header-h: 48px;
     --subnav-h: 32px;
+    --shell: 1760px;
+    --bg: #000;
+    --radius: 3px;
+    --gold-hi: #f7e1b4;
+    --grey-btn: #6d6d6d;
+    --green: #27ae60;
+    --green-hi: #3fcd7b;
+    --nav-bg: #303030;
+
 }
 
 html {
@@ -81,3 +90,213 @@ p {
 [id] {
     scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 10px);
 }
+
+/* BUTTONS */
+.btn[hidden] {
+    display: none;
+}
+
+.btn {
+    border: 1px solid transparent;
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    border-radius: var(--radius);
+    align-items: center;
+    display: inline-flex;
+    line-height: 19px;
+    min-height: 47px;
+    cursor: pointer;
+    transition: background-color var(--ease), color var(--ease);
+    overflow: hidden;
+    padding: 0 14px;
+    text-transform: uppercase;
+    justify-content: center;
+}
+
+.btn:hover {
+    text-decoration: none;
+}
+
+.btn_gold {
+    color: #000;
+    background: var(--gold);
+}
+
+.btn_gold:hover {
+    color: #000;
+    background: var(--gold-hi);
+}
+
+.btn_login {
+    color: var(--gold);
+    background: var(--grey-btn);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+}
+
+.btn_login:hover {
+    background: #555;
+    color: var(--gold);
+}
+
+.btn_green {
+    background: var(--green);
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+}
+
+.btn_green:hover {
+    color: #fff;
+    background: var(--green-hi);
+}
+
+.btn_red {
+    color: #fff;
+    background: linear-gradient(180deg, #de3c21 0%, #b41b0f 100%);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+}
+
+.btn_red:hover {
+    color: #fff;
+    background: linear-gradient(180deg, #ef4a2e 0%, #c92315 100%);
+}
+
+.btn_block {
+    width: 100%;
+    display: flex;
+}
+
+/* Общие стили */
+.container {
+    width: 100%;
+    padding-inline: 10px;
+    margin-inline: auto;
+    max-width: var(--shell);
+}
+
+main {
+    position: relative;
+    max-width: var(--shell);
+    background: transparent;
+    margin-inline: auto;
+}
+
+main::before {
+    z-index: -1;
+    position: absolute;
+    inset: 0 10px;
+    background: var(--bg);
+    content: "";
+}
+
+.content_panel {
+    position: relative;
+    background: var(--bg);
+}
+
+.content_section {
+    padding: 32px 0;
+}
+
+/* HEADER */
+.container_header {
+    left: 0;
+    right: 0;
+    top: 0;
+    position: fixed;
+    z-index: 200;
+    padding: 5px 0;
+    background: #000;
+}
+
+body.scroll-lock {
+    overflow: hidden;
+    padding-right: var(--scroll-lock-gap, 0px);
+}
+
+body.scroll-lock .container_header,
+body.scroll-lock .container_nav {
+    padding-right: var(--scroll-lock-gap, 0px);
+}
+
+.wrapper_content {
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    display: flex;
+}
+
+.logo {
+    line-height: 0;
+    display: block;
+    flex: none;
+}
+
+.logo img {
+    height: 38px;
+    width: 118px;
+}
+
+.buttons {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+}
+/* NAV */
+.container_nav {
+    background: var(--nav-bg);
+    color: #e0e0e0;
+    left: 0;
+    top: var(--header-h);
+    z-index: 100;
+    position: fixed;
+    width: 100%;
+}
+
+.container_nav_list {
+    overflow-x: auto;
+    scrollbar-width: none;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    align-items: center;
+}
+
+.container_nav_list::-webkit-scrollbar {
+    display: none;
+}
+
+.container_nav_item {
+    white-space: nowrap;
+    display: flex;
+    color: #e0e0e0;
+    margin: 6px 10px;
+    text-transform: uppercase;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 15px;
+}
+
+.container_nav_item:hover {
+    text-decoration: none;
+    color: var(--gold);
+
+}
+
+.container_nav_ico{
+    margin-right: 8px;
+    display: flex;
+}
+
+.container_nav_ico img {
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.35));
+    width: 20px;
+    height: 20px;
+}
+@media (min-width: 600px) {}
+@media (min-width: 720px) {}
+@media (min-width: 900px) {}
