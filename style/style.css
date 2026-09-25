@@ -90,6 +90,16 @@ p {
 [id] {
     scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 10px);
 }
+.visually-hidden {
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+    height: 1px;
+    white-space: nowrap;
+    margin: -1px;
+    clip-path: inset(50%);
+    width: 1px;
+}
 
 /* BUTTONS */
 .btn[hidden] {
@@ -810,6 +820,244 @@ body.scroll-lock .container_nav {
 .container_winners_arrow[hidden] {
     display: none;
 }
+
+/* JACKPOT */
+
+.container_jackpot_inner {
+    padding: 0 10px;
+}
+
+.container_jackpot_slide {
+    position: relative;
+}
+
+.container_jackpot_img {
+    width: 100%;
+    object-fit: cover;
+    height: 250px;
+}
+
+.container_jackpot_slide::after {
+    position: absolute;
+    height: 65%;
+    content: "";
+    pointer-events: none;
+    inset: auto 0 0;
+    background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.78) 100%
+    );
+}
+
+.container_jackpot_label,
+.container_jackpot_sum,
+.container_jackpot_cta {
+    text-align: center;
+    left: 0;
+    right: 0;
+    position: absolute;
+}
+
+.container_jackpot_label {
+    bottom: 48%;
+    text-shadow: 0 0 5px #000;
+    font-size: 18px;
+    font-weight: 700;
+    z-index: 2;
+    margin: 0;
+}
+
+.container_jackpot_sum {
+    margin: 0;
+    text-shadow: 0 0 5px #000;
+    bottom: 24%;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.2;
+    z-index: 2;
+}
+
+.container_jackpot_cta {
+    bottom: 5%;
+    z-index: 2;
+}
+
+/* Как начать играть */
+.container_howto_inner {
+    padding: 0 10px;
+}
+
+.container_howto_list {
+    list-style: none;
+    padding: 0;
+    flex-wrap: wrap;
+    margin: 0;
+    display: flex;
+}
+
+.container_howto_item {
+    background: var(--nav-bg);
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+}
+
+.container_howto_icon {
+    text-align: center;
+    padding: 24px 0 16px;
+}
+
+.container_howto_icon img {
+    margin: 0 auto;
+    max-height: 96px;
+    max-width: 100%;
+    width: auto;
+    display: block;
+}
+
+.container_howto_text {
+    min-height: 46px;
+    line-height: 18px;
+    color: #fff;
+    font-size: 15px;
+    text-align: center;
+    margin: 0;
+}
+
+.container_howto_cta {
+    padding-bottom: 14px;
+    margin-top: auto;
+}
+
+
+/* Статья */
+.container_article {
+    line-height: 22px;
+    color: #fff;
+    font-size: var(--font-size-small);
+}
+
+article.container_article_pb {
+    padding-bottom: 8px;
+}
+
+.container_article p {
+    margin: 0 0 2rem;
+}
+
+.container_article_title {
+    color: var(--gold);
+    padding: 0;
+    margin: 0 0 20px;
+    text-transform: uppercase;
+    line-height: 24px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.container_article_title-ico {
+    width: 1.2em;
+    display: inline-block;
+    margin: 0 0.12em;
+    height: 1.2em;
+    vertical-align: -0.2em;
+    object-fit: contain;
+}
+
+.container_article h2 {
+    line-height: 24px;
+    color: var(--gold);
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+}
+
+.container_article h2#official {
+    margin-bottom: 30px;
+}
+
+.container_article h2#play {
+    margin-bottom: 20px;
+}
+
+.container_article_lead {
+    line-height: 26px;
+}
+
+.container_article h3 {
+    margin: 0 0 20px;
+    line-height: 19.2px;
+    color: var(--gold);
+    font-size: var(--font-size);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.container_article_list {
+    margin: 0;
+    list-style: disc outside;
+    padding: 0 0 12px 20px;
+    color: #fff;
+}
+
+.container_article_list li {
+    line-height: inherit;
+    line-height: 26px;
+    font-size: inherit;
+    font-size: var(--font-size);
+    padding: 0 0 10px 15px;
+    color: #fff;
+    margin: 0;
+    list-style-type: disc;
+}
+
+.container_article_list li::marker {
+    color: #fff;
+}
+
+.container_article_list b {
+    color: #fff;
+}
+
+.container_article_shot {
+    margin: 0 0 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container_article_shot .item_shot_btn {
+    flex: 0 1 1050px;
+    max-width: min(100%, 1050px);
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+.container_article_shot .item_shot_btn img,
+.container_article_shot img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    width: 100%;
+    aspect-ratio: auto;
+    object-fit: contain;
+}
+
+.container_article_shot .item_shot_btn:hover {
+    border-color: transparent;
+}
+
+.container_article_shot .item_shot_btn:hover img {
+    transform: none;
+}
+
+
 
 @media (min-width: 600px) {}
 @media (min-width: 720px) {}

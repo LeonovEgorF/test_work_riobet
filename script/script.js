@@ -342,24 +342,24 @@ const keepFocusInsideModal = (event, modal) => {
         firstEl.focus();
     }
 };
-//let lockCount = 0;
-// const lockPageScroll = () => {
-//     if (lockCount === 0) {
-//         const gap = window.innerWidth - document.documentElement.clientWidth;
-//         document.documentElement.style.setProperty('--scroll-lock-gap', `${gap}px`);
-//         document.body.classList.add('scroll-lock');
-//     }
-//
-//     lockCount += 1;
-// };
-// const unlockPageScroll = () => {
-//     lockCount = Math.max(0, lockCount - 1);
-//
-//     if (lockCount === 0) {
-//         document.body.classList.remove('scroll-lock');
-//         document.documentElement.style.removeProperty('--scroll-lock-gap');
-//     }
-// };
+let lockCount = 0;
+const lockPageScroll = () => {
+    if (lockCount === 0) {
+        const gap = window.innerWidth - document.documentElement.clientWidth;
+        document.documentElement.style.setProperty('--scroll-lock-gap', `${gap}px`);
+        document.body.classList.add('scroll-lock');
+    }
+
+    lockCount += 1;
+};
+const unlockPageScroll = () => {
+    lockCount = Math.max(0, lockCount - 1);
+
+    if (lockCount === 0) {
+        document.body.classList.remove('scroll-lock');
+        document.documentElement.style.removeProperty('--scroll-lock-gap');
+    }
+};
 
 const initWinners = () => {
     const block = document.getElementById('winners');
@@ -457,6 +457,127 @@ const initWinners = () => {
     syncWinnerArrows();
     startWinnersAutoScroll();
 };
+
+
+const initLightbox = () => {
+    const lightbox = document.getElementById('lightbox');
+    const article = document.querySelector('.container_article');
+
+    if (!lightbox || !article) {
+        return;
+    }
+
+    const shot = document.getElementById('lightbox-img');
+    const caption = document.getElementById('lightbox-caption');
+    const closeBtn = document.getElementById('lightbox-close');
+    const blankSrc = shot.getAttribute('src');
+    let lastFocus = null;
+
+    const openLightbox = (shotBtn) => {
+
+        lastFocus = shotBtn;
+        shot.src = shotBtn.dataset.full;
+        shot.alt = shotBtn.dataset.caption || '';
+
+        caption.textContent = shotBtn.dataset.caption || '';
+        lightbox.hidden = false;
+        lockPageScroll();
+        closeBtn.focus();
+    };
+
+    const closeLightbox = () => {
+        lightbox.hidden = true;
+        shot.src = blankSrc;
+        unlockPageScroll();
+
+        if (lastFocus) {
+            lastFocus.focus();
+        }
+    };
+
+    const handleScreenshotClick = (event) => {
+        const shotBtn = event.target.closest('.item_shot_btn');
+
+        if (shotBtn) {
+            openLightbox(shotBtn);
+        }
+    };
+
+    const handleLightboxBackdropClick = (event) => {
+        if (event.target === lightbox) {
+            closeLightbox();
+        }
+
+        if (event.target.classList.contains(' container_lightbox_inner')) {
+            closeLightbox();
+        }
+    };
+
+    const handleLightboxKeydown = (event) => {
+        if (event.key === 'Escape' && !lightbox.hidden) {
+            closeLightbox();
+        }
+    };
+
+    article.addEventListener('click', handleScreenshotClick);
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', handleLightboxBackdropClick);
+    document.addEventListener('keydown', handleLightboxKeydown);
+};
+
+
+const initTableOfContents = () => {
+    const toggle = document.getElementById('toc-toggle');
+    const list = document.getElementById('toc-list');
+
+    if (!toggle || !list) {
+        return;
+    }
+    const handleContentsToggle = () => {
+        const opened = toggle.getAttribute('aria-expanded') === 'true';
+
+        toggle.setAttribute('aria-expanded', opened ? 'false' : 'true');
+        list.hidden = opened;
+    };
+
+    toggle.addEventListener('click', handleContentsToggle);
+};
+
+const initSubscribe = () => {
+    const form = document.getElementById('subscribe');
+
+    if (!form) {
+        return;
+    }
+
+    const status = document.getElementById('subscribe-status');
+    const email = document.getElementById('email');
+    const handleSubscribeSubmit = (event) => {
+        event.preventDefault();
+        const value = email.value.trim();
+        const valid = emailRe.test(value);
+
+        if (!valid) {
+            status.textContent = 'Введите корректный e-mail, например name@mail.com';
+            status.classList.add('error');
+            email.focus();
+            return;
+        }
+
+        status.textContent = '';
+        status.classList.remove('error');
+        form.reset();
+        const modalEmail = document.getElementById('subscribe-modal-email');
+        modalEmail.textContent = value;
+        openDialog(document.getElementById('subscribe-modal'), event.submitter);
+    };
+
+    form.addEventListener('submit', handleSubscribeSubmit);
+};
+
 initSlider();
 initGames()
 initWinners();
+initLightbox();
+initTableOfContents();
+initSubscribe();
