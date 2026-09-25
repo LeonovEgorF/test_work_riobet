@@ -1,5 +1,8 @@
 'use strict'
 
+
+/* Берёт адрес из data-src и подставляет его в src, когда картинку пора показать. */
+
 const loadImageFromData = (imageElement) => {
     if (!imageElement || !imageElement.getAttribute('data-src')) {
         return;
@@ -13,13 +16,17 @@ const loadImageFromData = (imageElement) => {
     imageElement.removeAttribute('data-src');
 };
 
+/* Читает --slide-duration из CSS и переводит секунды в миллисекунды. Если переменной нет, оставляет 6 секунд. */
+
 const getSlideDuration = () => {
     const durationFromCss = getComputedStyle(document.documentElement).getPropertyValue(
         '--slide-duration',
     );
-    const result = parseFloat(durationFromCss) ? durationInSeconds * 1000 : 6000
-    return result
+    const result = parseFloat(durationFromCss);
+    return result ? result * 1000 : 6000;
 };
+/* Включает один слайдер: лента, точки, стрелки, автопрокрутка, пауза и свайп. */
+
 const initSlider = (slider) => {
     const track = slider.querySelector('.wrapper_slider_track');
     const progress = slider.querySelector('.wrapper_slider_progress');
@@ -192,7 +199,13 @@ const initSlider = (slider) => {
     }
 }
 
+/* Находит все блоки с data-slider и включает каждый. */
+const initSliders = () => {
+    const sliders = document.querySelectorAll('[data-slider]');
+    sliders.forEach(initSlider);
+};
 
+/* Фильтр слотов по категориям и выпадающий список Live Casino. */
 const initGames = () => {
     const grid = document.getElementById('games-grid');
 
@@ -320,6 +333,9 @@ const initGames = () => {
 
     showGamesByCategory('popular', catBtns[0], catBtns[0].dataset.title);
 };
+
+
+/* Не даёт Tab уйти из модального окна: с последнего элемента фокус возвращается на первый. */
 const keepFocusInsideModal = (event, modal) => {
     if (event.key !== 'Tab') {
         return;
@@ -342,7 +358,13 @@ const keepFocusInsideModal = (event, modal) => {
         firstEl.focus();
     }
 };
+
+
+
+
 let lockCount = 0;
+
+/* Прячет прокрутку страницы и записывает ширину полосы в --scroll-lock-gap. */
 const lockPageScroll = () => {
     if (lockCount === 0) {
         const gap = window.innerWidth - document.documentElement.clientWidth;
@@ -352,6 +374,8 @@ const lockPageScroll = () => {
 
     lockCount += 1;
 };
+
+/* Возвращает прокрутку, когда закрыто последнее окно. */
 const unlockPageScroll = () => {
     lockCount = Math.max(0, lockCount - 1);
 
@@ -359,6 +383,104 @@ const unlockPageScroll = () => {
         document.body.classList.remove('scroll-lock');
         document.documentElement.style.removeProperty('--scroll-lock-gap');
     }
+};
+
+
+let openDialog = () => {};
+
+/* Открытие и закрытие модальных окон: кнопки, клик по фону, Escape и возврат фокуса. */
+const initModals = () => {
+    const modals = Array.from(document.querySelectorAll('.container_modal'));
+
+    if (!modals.length) {
+        return;
+    }
+
+    const gameName = document.getElementById('game-modal-name');
+    let lastOpener = null;
+    let active = null;
+
+    /* Показывает окно, блокирует прокрутку и ставит фокус на кнопку закрытия. */
+    openDialog = (modal, trigger) => {
+        if (!modal) {
+            return;
+        }
+
+        if (active) {
+            active.hidden = true;
+        }
+
+        lastOpener = trigger || null;
+        active = modal;
+        modal.hidden = false;
+        lockPageScroll();
+        const closeBtn = modal.querySelector('[data-modal-close]');
+
+        if (closeBtn) {
+            closeBtn.focus();
+        }
+    };
+
+    /* Прячет окно, возвращает прокрутку и фокус на кнопку, которая его открыла. */
+    const closeDialog = () => {
+        if (!active) {
+            return;
+        }
+
+        active.hidden = true;
+        unlockPageScroll();
+        active = null;
+
+        if (lastOpener) {
+            lastOpener.focus();
+        }
+    };
+
+    /* Карточка игры открывает окно с её названием. Остальные кнопки открывают окно из data-modal. */
+    const handleOpenClick = (event) => {
+        const gameBtn = event.target.closest('.item_game_btn');
+
+        if (gameBtn) {
+            event.preventDefault();
+            gameName.textContent = gameBtn.dataset.game + ' (' + gameBtn.dataset.provider + ')';
+            openDialog(document.getElementById('game-modal'), gameBtn);
+            return;
+        }
+
+        const opener = event.target.closest('[data-modal]');
+
+        if (opener) {
+            event.preventDefault();
+            openDialog(document.getElementById(opener.dataset.modal), opener);
+        }
+    };
+
+    /* Клик по фону или по крестику закрывает окно. */
+    const handleModalClick = (event) => {
+        if (event.target.classList.contains('container_modal') || event.target.closest('[data-modal-close]')) {
+            closeDialog();
+        }
+    };
+
+    /* Escape закрывает окно, Tab остаётся внутри него. */
+    const handleModalKeydown = (event) => {
+        if (!active || active.hidden) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            closeDialog();
+            return;
+        }
+
+        keepFocusInsideModal(event, active.querySelector('.container_modal_window'));
+    };
+
+    document.addEventListener('click', handleOpenClick);
+    modals.forEach((modal) => {
+        modal.addEventListener('click', handleModalClick);
+    });
+    document.addEventListener('keydown', handleModalKeydown);
 };
 
 const initWinners = () => {
@@ -581,3 +703,4 @@ initWinners();
 initLightbox();
 initTableOfContents();
 initSubscribe();
+initModals();
