@@ -2147,7 +2147,6 @@ article.container_article_pb {
 }
 
 
-/* Длинный текст не раздвигает страницу */
 .buttons {
     min-width: 0;
     flex: 1 1 auto;

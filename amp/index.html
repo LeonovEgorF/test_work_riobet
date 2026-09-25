@@ -11,7 +11,3429 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Ccircle%20cx='16'%20cy='16'%20r='15'%20fill='%231d7a3c'%20stroke='%23edc97f'%20stroke-width='2'/%3E%3Ctext%20x='16'%20y='22'%20font-family='Arial'%20font-size='16'%20font-weight='700'%20fill='%23edc97f'%20text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>
     <noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
-    <style amp-custom></style>
+    <style amp-custom>
+        :root{
+            --header-h: 48px;
+            --subnav-h: 32px;
+            --grey-btn: #6d6d6d;
+            --nav-bg: #303030;
+            --green: #27ae60;
+            --cell-body: #5e5e5e;
+            --text: #fff;
+            --gold-dark: #d4a94f;
+            --muted: #a6a6a6;
+            --line: #2a2a2a;
+            --ease: 0.3s ease;
+            --panel: #111;
+            --gold: #edc97f;
+            --cell-head: #3a3a3a;
+            --bg: #000;
+            --red-hi: #e13b23;
+            --panel-2: #1b1b1b;
+            --shell: 1760px;
+            --slide-duration: 6s;
+            --gold-soft: rgba(237, 201, 127, 0.35);
+            --radius: 3px;
+            --gold-hi: #f7e1b4;
+            --ink: #000;
+            --radius-lg: 12px;
+            --green-hi: #3fcd7b;
+            --red: #d0311b;
+            --font-size: 16px;
+            --font-size-small: 14px;
+            --font-size-title: 23px;
+        }
+
+        @font-face {
+            font-family: "RobotoC";
+            font-style: normal;
+            font-weight: 400 700;
+            font-display: swap;
+            src: url("../fonts/rc-cyrillic.woff2") format("woff2");
+            unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+
+        @font-face {
+            font-family: "RobotoC";
+            font-style: normal;
+            font-weight: 400 700;
+            font-display: swap;
+            src: url("../fonts/rc-latin.woff2") format("woff2");
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+            U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+            U+FEFF, U+FFFD;
+        }
+
+
+        *,
+        *::before,
+        *::after{
+            box-sizing: border-box;
+        }
+
+        html{
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body{
+            overflow-x: hidden;
+            min-width: 320px;
+            color: var(--text);
+            margin: 0;
+            font: 400 13px/1.65 "RobotoC", "Roboto Condensed", Arial, sans-serif;
+            background: #000 url("../img/pattern.png") 50% 50% repeat;
+        }
+
+        img, amp-img{
+            display: block;
+            height: auto;
+            max-width: 100%;
+        }
+
+        a,
+        span[role="button"]{
+            text-decoration: none;
+            transition: color var(--ease), background-color var(--ease);
+            cursor: pointer;
+        }
+
+        a,
+        span[role="button"]:not(.btn):not(.item_game_btn){
+            color: var(--gold);
+        }
+
+        a:hover,
+        span[role="button"]:not(.btn):not(.item_game_btn):hover{
+            text-decoration: underline;
+        }
+
+        span[role="button"].btn:hover,
+        span[role="button"].item_game_btn:hover{
+            text-decoration: none;
+        }
+
+        h1,
+        h2,
+        h3{
+            line-height: 1.25;
+            margin: 0 0 0.6em;
+            font-weight: 700;
+        }
+
+        p{
+            margin: 0 0 2em;
+        }
+
+        :focus-visible{
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        [id]{
+            scroll-margin-top: calc(var(--header-h) + var(--subnav-h) + 10px);
+        }
+
+        .scroll-target{
+            display: block;
+            height: 0;
+            overflow: hidden;
+            scroll-margin-top: 0;
+            padding-top: calc(var(--header-h) + var(--subnav-h) + 10px);
+            margin-top: calc((var(--header-h) + var(--subnav-h) + 10px) * -1);
+        }
+
+        .visually-hidden{
+            padding: 0;
+            overflow: hidden;
+            position: absolute;
+            height: 1px;
+            white-space: nowrap;
+            margin: -1px;
+            clip-path: inset(50%);
+            width: 1px;
+        }
+
+
+        /* Каркас */
+        .container{
+            width: 100%;
+            padding-inline: 10px;
+            margin-inline: auto;
+            max-width: var(--shell);
+        }
+
+        .container_article > .container,
+        .container_footer_links > .container{
+            padding-inline: 20px;
+        }
+
+        main{
+            position: relative;
+            max-width: var(--shell);
+            background: transparent;
+            margin-inline: auto;
+        }
+
+        main::before{
+            z-index: -1;
+            position: absolute;
+            inset: 0 10px;
+            background: var(--bg);
+            content: "";
+        }
+
+        .content_panel{
+            position: relative;
+            background: var(--bg);
+        }
+
+        .content_section{
+            padding: 32px 0;
+        }
+
+
+        /* Кнопки */
+        .btn[hidden]{
+            display: none;
+        }
+
+        .btn{
+            border: 1px solid transparent;
+            background: transparent;
+            color: inherit;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            border-radius: var(--radius);
+            align-items: center;
+            display: inline-flex;
+            line-height: 19px;
+            min-height: 47px;
+            cursor: pointer;
+            transition: background-color var(--ease), color var(--ease);
+            overflow: hidden;
+            padding: 0 14px;
+            text-transform: uppercase;
+            justify-content: center;
+        }
+
+        .btn:hover{
+            text-decoration: none;
+        }
+
+        .btn_gold{
+            color: #000;
+            background: var(--gold);
+        }
+
+        .btn_gold:hover{
+            color: #000;
+            background: var(--gold-hi);
+        }
+
+        .btn_login{
+            color: var(--gold);
+            background: var(--grey-btn);
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn_login:hover{
+            background: #555;
+            color: var(--gold);
+        }
+
+        .btn_green{
+            background: var(--green);
+            color: #fff;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn_green:hover{
+            color: #fff;
+            background: var(--green-hi);
+        }
+
+        .btn_red{
+            color: #fff;
+            background: linear-gradient(180deg, #de3c21 0%, #b41b0f 100%);
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn_red:hover{
+            color: #fff;
+            background: linear-gradient(180deg, #ef4a2e 0%, #c92315 100%);
+        }
+
+        .btn_block{
+            width: 100%;
+            display: flex;
+        }
+
+
+
+
+        /* Шапка */
+        .container_header{
+            left: 0;
+            right: 0;
+            top: 0;
+            position: fixed;
+            z-index: 200;
+            padding: 5px 0;
+            background: #000;
+        }
+
+        .wrapper_content{
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+            display: flex;
+        }
+
+        .logo{
+            line-height: 0;
+            display: block;
+            flex: none;
+        }
+
+        .logo:hover{
+            text-decoration: none;
+        }
+
+        .logo img, .logo amp-img{
+            height: 38px;
+            width: 118px;
+        }
+
+        .buttons{
+            align-items: center;
+            display: flex;
+            gap: 8px;
+        }
+
+
+        /* Навигация */
+        .container_nav{
+            background: var(--nav-bg);
+            color: #e0e0e0;
+            left: 0;
+            top: var(--header-h);
+            z-index: 100;
+            position: fixed;
+            width: 100%;
+        }
+
+        .container_nav_list{
+            overflow-x: auto;
+            scrollbar-width: none;
+            display: flex;
+            list-style: none;
+            margin: 0;
+            align-items: center;
+        }
+
+        .container_nav_list::-webkit-scrollbar{
+            display: none;
+        }
+
+        .container_nav_item{
+            white-space: nowrap;
+            display: flex;
+            color: #e0e0e0;
+            margin: 6px 10px;
+            text-transform: uppercase;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 15px;
+        }
+
+        .container_nav_item:hover{
+            text-decoration: none;
+            color: var(--gold);
+        }
+
+        .container_nav_ico{
+            margin-right: 8px;
+            display: flex;
+            position: relative;
+            width: 20px;
+            height: 20px;
+            flex: none;
+        }
+
+        .container_nav_ico amp-img{
+            filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.35));
+        }
+
+
+        /* Приветственный бонус */
+        .container_offer{
+            padding: calc(var(--header-h) + var(--subnav-h) + 12px) 0 12px;
+        }
+
+        .container_offer .container{
+            padding-inline: 20px;
+        }
+
+        .container_offer_box{
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            background: #000;
+            padding: 14px 16px;
+            text-align: center;
+        }
+
+        .container_offer_kicker{
+            margin: 0 0 4px;
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .container_offer_text{
+            margin: 0 0 12px;
+            color: #fff;
+            font-size: clamp(18px, 2vw, 24px);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .container_offer_row{
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+        }
+
+        .container_offer_code{
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 47px;
+            padding: 0 16px;
+            border: 1px solid var(--gold);
+            border-radius: var(--radius);
+            background: transparent;
+        }
+
+        .container_offer_code_label{
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .container_offer_code_value{
+            color: var(--gold);
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+        }
+
+        .container_offer .btn{
+            min-height: 47px;
+        }
+
+
+        /* Приветственный бонус от 640px */
+        @media (min-width: 640px){
+            .container_offer_row{
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .container_offer_code,
+            .container_offer .btn{
+                min-width: 220px;
+            }
+        }
+
+
+        /* Слайдер акций */
+        .container_slider{
+            padding-top: 0;
+        }
+
+        .wrapper_slider{
+            position: relative;
+        }
+
+        .wrapper_slider_viewport{
+            overflow: hidden;
+        }
+
+        .wrapper_slider_track{
+            display: flex;
+            transition: transform 0.5s ease;
+            padding: 0;
+            list-style: none;
+            margin: 0;
+            will-change: transform;
+        }
+
+        .item_slide{
+            flex: 0 0 100%;
+            max-width: 100%;
+            position: relative;
+        }
+
+        .item_slide_img{
+            object-fit: cover;
+            object-position: 50% 50%;
+            aspect-ratio: 2 / 1;
+            width: 100%;
+        }
+
+        .item_slide_cta{
+            left: 0;
+            right: 0;
+            bottom: 10px;
+            text-align: center;
+            position: absolute;
+        }
+
+        .item_slide_cta .btn{
+            min-width: 150px;
+        }
+
+        .wrapper_slider_arrow{
+            transform: translateY(-50%);
+            width: 34px;
+            line-height: 1;
+            z-index: 10;
+            opacity: 0;
+            height: 54px;
+            font-size: 38px;
+            transition: opacity var(--ease);
+            cursor: pointer;
+            background: transparent;
+            border: 0;
+            padding: 0;
+            position: absolute;
+            top: 50%;
+            color: #fff;
+        }
+
+        .wrapper_slider:hover .wrapper_slider_arrow,
+        .wrapper_slider_arrow:focus-visible{
+            opacity: 0.75;
+        }
+
+        .wrapper_slider_arrow:hover{
+            opacity: 1;
+        }
+
+        .wrapper_slider_arrow_prev{
+            left: 4px;
+        }
+
+        .wrapper_slider_arrow_next{
+            right: 4px;
+        }
+
+        .wrapper_slider_progress{
+            display: flex;
+            align-items: stretch;
+            flex-wrap: nowrap;
+            gap: 0;
+            border-right: 1px solid var(--gold);
+        }
+
+        .wrapper_slider_seg{
+            overflow: hidden;
+            min-width: 0;
+            cursor: pointer;
+            display: block;
+            border: 0;
+            border-left: 1px solid var(--gold);
+            position: relative;
+            padding: 0;
+            height: 10px;
+            flex: 1 1 0;
+            background: var(--nav-bg);
+        }
+
+        .wrapper_slider_fill{
+            transform: scaleX(0);
+            transform-origin: left center;
+            background: var(--gold);
+
+            position: absolute;
+            inset: 0;
+        }
+
+        .wrapper_slider_seg.active .wrapper_slider_fill{
+            animation: seg-fill var(--slide-duration) linear forwards;
+        }
+
+        .paused .wrapper_slider_seg.active .wrapper_slider_fill{
+            animation-play-state: paused;
+        }
+
+        @keyframes seg-fill {
+            from {
+                transform: scaleX(0);
+            }
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+
+        /* Слоты */
+        .container_games_inner{
+            padding: 32px 10px 0;
+
+        }
+
+        .container_games_live .container_games_inner{
+            padding-top: 0;
+        }
+
+        .container_games_title,
+        .container_winners_title,
+        .container_jackpot_title,
+        .container_howto_heading{
+            color: #fff;
+            margin: 0;
+            padding: 32px 0;
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        #games-title{
+            padding-top: 0;
+        }
+
+        .container_games_grid{
+            list-style: none;
+            display: grid;
+            padding: 0;
+            grid-template-columns: repeat(2, 1fr);
+            margin: 0;
+            gap: 3px;
+        }
+
+        .item_game[hidden]{
+            display: none;
+        }
+
+        .item_game_btn{
+            cursor: pointer;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+            display: block;
+            padding: 0;
+            border: 0;
+        }
+
+        .item_game_btn > img, .item_game_btn > amp-img{
+            width: 100%;
+            display: block;
+            transition: filter 0.25s ease, transform 0.25s ease;
+            aspect-ratio: 3 / 2;
+            object-fit: cover;
+        }
+
+        .item_game_play{
+            opacity: 0;
+            transition: opacity 0.25s ease, transform 0.25s ease,
+            background-color var(--ease);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+            width: 56px;
+            display: flex;
+            height: 56px;
+            align-items: center;
+            position: absolute;
+            background: var(--green);
+            transform: translate(-50%, -50%) scale(0.75);
+            justify-content: center;
+        }
+
+        .item_game_play amp-img{
+            margin-left: 3px;
+        }
+
+        .item_game_btn:is(:hover, :focus-visible) > img, .item_game_btn:is(:hover, :focus-visible) > amp-img{
+            filter: blur(4px) brightness(0.55);
+            transform: scale(1.04);
+        }
+
+        .item_game_btn:is(:hover, :focus-visible) .item_game_play{
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .item_game_btn:hover .item_game_play{
+            background: var(--green-hi);
+        }
+
+        .container_games_more{
+            padding: 32px 0 0;
+        }
+
+        .container_games_more .btn{
+            margin: 0 auto;
+            max-width: 100%;
+
+        }
+
+
+        /* Модальные окна */
+        .games_lightbox{
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.82);
+            box-sizing: border-box;
+        }
+
+        .games_lightbox_window{
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            max-height: calc(100vh - 32px);
+            overflow-y: auto;
+            padding: 24px 20px 20px;
+            background:  linear-gradient(180deg, #151515 0%, #050505 100%);
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+        }
+
+        .games_lightbox_close{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: #9a9a9a;
+            font-size: 26px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .games_lightbox_title{
+            margin: 0 0 12px;
+            padding-right: 30px;
+            color: var(--gold);
+            font-size: 22px;
+            text-transform: uppercase;
+        }
+
+        .games_lightbox_text{
+            margin: 0 0 14px;
+            color:#d8d8d8;
+            font-size: var(--font-size-small);
+            line-height: 1.5;
+        }
+
+        .games_lightbox_note{
+            margin: 14px 0 0;
+            color: #6f6f6f;
+            font-size: 11px;
+            text-align: center;
+        }
+
+
+        /* Победители */
+        .container_winners_inner{
+            padding: 0 10px;
+        }
+
+        .container_winners_slider{
+            position: relative;
+        }
+
+        .container_winners_track{
+            padding: 0 0 4px;
+            display: flex;
+            gap: 7px;
+            scrollbar-width: none;
+            overflow-x: auto;
+            list-style:none;
+            overscroll-behavior-x: contain;
+            margin: 0;
+            scroll-snap-type: x mandatory;
+        }
+
+        .container_winners_track::-webkit-scrollbar{
+            display: none;
+        }
+
+        .item_winner{
+            text-align: center;
+            scroll-snap-align: start;
+            flex: 0 0 calc((100% - 7px) / 2);
+        }
+
+        .item_winner_player{
+            text-decoration: underline;
+            margin: 0;
+
+            color: #fff;
+            font-size: 15px;
+            line-height: 1.65;
+        }
+
+        .item_winner_row{
+            font-size: 15px;
+            margin: 0;
+            color: #fff;
+            line-height: 1.65;
+        }
+
+        .item_winner_row_bet{
+            padding-top: 5px;
+        }
+
+        .item_winner_row_mult{
+            padding-bottom: 5px;
+        }
+
+        .item_winner_row span{
+            color: var(--gold);
+            font-size: 17px;
+            padding-left: 8px;
+        }
+
+        .item_winner_sum{
+            color: var(--gold);
+            margin: 0;
+            padding-bottom: 14px;
+            line-height: 26px;
+            font-size: 30px;
+        }
+
+        .container_winners_arrow{
+            font-size: 34px;
+            top: 40%;
+            transition: opacity var(--ease), background-color var(--ease);
+            opacity: 0;
+            cursor: pointer;
+            line-height: 1;
+            background: rgba(0, 0, 0, 0.55);
+            height: 54px;
+            position: absolute;
+            border: 0;
+            padding: 0;
+            z-index: 5;
+            color: #fff;
+            width: 34px;
+        }
+
+        .container_winners_slider:hover .container_winners_arrow,
+        .container_winners_arrow:focus-visible{
+            opacity: 0.85;
+        }
+
+        .container_winners_arrow:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.75);
+        }
+
+        .container_winners_arrow_prev{
+            left: 0;
+        }
+
+        .container_winners_arrow_next {
+
+            right: 0;
+
+        }
+
+        .container_winners_arrow[hidden]{
+            display: none;
+        }
+
+
+        /* Джекпот */
+        .container_jackpot_inner{
+            padding: 0 10px;
+        }
+
+        .container_jackpot_slide{
+            position: relative;
+        }
+
+        .container_jackpot_img{
+            width: 100%;
+            object-fit: cover;
+            height: 250px;
+        }
+
+        .container_jackpot_slide::after{
+            position: absolute;
+
+            height: 65%;
+            content: "";
+            pointer-events: none;
+            inset: auto 0 0;
+            background: linear-gradient(
+                    180deg,
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, 0.78) 100%
+            );
+        }
+
+        .container_jackpot_label,
+        .container_jackpot_sum,
+        .container_jackpot_cta{
+            text-align: center;
+            left: 0;
+            right: 0;
+            position: absolute;
+
+        }
+
+        .container_jackpot_label{
+            bottom: 48%;
+            text-shadow: 0 0 5px #000;
+            font-size: 18px;
+            font-weight: 700;
+            z-index: 2;
+
+            margin: 0;
+        }
+
+        .container_jackpot_sum{
+            margin: 0;
+            text-shadow: 0 0 5px #000;
+            bottom: 24%;
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1.2;
+            z-index: 2;
+        }
+
+        .container_jackpot_cta{
+            bottom: 5%;
+            z-index: 2;
+
+        }
+
+
+        /* Как начать играть */
+        .container_howto_inner{
+            padding: 0 10px;
+        }
+
+        .container_howto_list{
+            list-style: none;
+            padding: 0;
+            flex-wrap: wrap;
+            margin: 0;
+            display: flex;
+        }
+
+        .container_howto_item{
+            background: var(--nav-bg);
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            padding: 0 10px;
+        }
+
+        .container_howto_icon{
+            text-align: center;
+            padding: 24px 0 16px;
+        }
+
+        .container_howto_icon img, .container_howto_icon amp-img{
+            margin: 0 auto;
+            max-height: 96px;
+            max-width: 100%;
+            width: auto;
+            display: block;
+        }
+
+        .container_howto_text{
+            min-height: 46px;
+            line-height: 18px;
+            color: #fff;
+            font-size: 15px;
+            text-align: center;
+            margin: 0;
+        }
+
+        .container_howto_cta{
+            padding-bottom: 14px;
+            margin-top: auto;
+        }
+
+
+        /* Статья */
+        .container_article{
+            line-height: 22px;
+            color: #fff;
+            font-size: var(--font-size-small);
+        }
+
+        article.container_article_pb{
+            padding-bottom: 8px;
+
+        }
+
+        .container_article p{
+            margin: 0 0 2rem;
+        }
+
+        .container_article_title{
+            color: var(--gold);
+            padding: 0;
+            margin: 0 0 20px;
+            text-transform: uppercase;
+            line-height: 24px;
+
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .container_article_title-ico{
+            width: 1.2em;
+            display: inline-block;
+            margin: 0 0.12em;
+            height: 1.2em;
+            vertical-align: -0.2em;
+            object-fit: contain;
+        }
+
+        .container_article h2{
+            line-height: 24px;
+            color: var(--gold);
+            font-size: 20px;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin: 0 0 20px;
+        }
+
+        .container_article #official + h2{
+            margin-bottom: 30px;
+        }
+
+        .container_article #play + h2{
+            margin-bottom: 20px;
+        }
+
+        .container_article_lead{
+            line-height: 26px;
+        }
+
+        .container_article h3{
+            margin: 0 0 20px;
+            line-height: 19.2px;
+            color: var(--gold);
+            font-size: var(--font-size);
+            font-weight: 500;
+            text-transform: uppercase;
+
+        }
+
+        .container_article_list{
+            margin: 0;
+            list-style: disc outside;
+            padding: 0 0 12px 20px;
+            color: #fff;
+        }
+
+        .container_article_list li {
+            line-height: inherit;
+            line-height: 26px;
+            font-size: inherit;
+            font-size: var(--font-size);
+            padding: 0 0 10px 15px;
+            color: #fff;
+            margin: 0;
+            list-style-type: disc;
+        }
+
+        .container_article_list li::marker {
+            color: #fff;
+        }
+
+        .container_article_list b{
+            color: #fff;
+        }
+
+        .container_article_shot{
+            margin: 0 0 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container_article_shot img, .container_article_shot amp-img{
+            display: block;
+            max-width: min(100%, 1050px);
+            height: auto;
+            width: 100%;
+            flex: 0 1 1050px;
+        }
+
+
+        /* Бонусные карточки */
+        .container_bonuses{
+            padding: 0;
+            width: 100%;
+            margin: 0 auto 2rem;
+            max-width: 1134px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .container_bonus{
+            color: #fff;
+            box-sizing: border-box;
+            min-height: 0;
+            padding: 12px 10px 18px;
+            box-shadow: none;
+            border-radius: 0;
+            aspect-ratio: 428 / 645;
+            background-color: transparent;
+            background-image: url("../img/bonus/card-frame.webp");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100% 100%;
+            flex-direction: column;
+            flex: 1 1 calc(50% - 6px);
+            display: flex;
+            border: 0;
+            margin: 0;
+            max-width: calc(50% - 6px);
+            align-items: center;
+            position: relative;
+        }
+
+        .container_bonus_info{
+            border-radius: 50%;
+            border: 0;
+            position: absolute;
+            display: block;
+            top: 15px;
+            right: 15px;
+            z-index: 2;
+            object-fit: contain;
+            width: 26px;
+            pointer-events: none;
+            padding: 0;
+            background: transparent;
+            height: 26px;
+        }
+
+        .container_bonus_hero{
+            height: auto;
+            object-fit: contain;
+            display: block;
+            width: 100%;
+            max-width: 190px;
+        }
+
+        .container_bonus_arrow{
+            margin: 2px 0 8px;
+            object-fit: contain;
+            height: auto;
+            width: 42px;
+            display: block;
+        }
+
+        .container_article .container_bonus_title{
+            margin: 8px 0 12px;
+            font-size: var(--font-size);
+            font-weight: 500;
+            padding: 0 6px;
+            line-height: 1.25;
+            text-align: center;
+            color: #fff;
+        }
+
+        .container_bonus_tiers,
+        .container_bonus_tiers li{
+            list-style: none;
+        }
+
+        .container_bonus_tiers{
+            align-items: center;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .container_bonus_tier{
+            font-size: 18px;
+            font-weight: 700;
+            gap: 10px;
+            color: #fff;
+            line-height: 1;
+            align-items: center;
+            justify-content: center;
+            min-height: 28px;
+            padding: 0;
+            display: flex;
+            margin: 0;
+        }
+
+        .container_bonus_tier_muted{
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .container_bonus_tier_muted .container_bonus_crown{
+            opacity: 0.75;
+        }
+
+        .container_bonus_crown{
+            width: 34px;
+            object-fit: contain;
+            display: block;
+            flex: none;
+            height: auto;
+        }
+
+        .container_bonus_crown_vip{
+            width: 34px;
+        }
+
+        .container_bonus_na{
+            font-size: var(--font-size);
+            line-height: 1;
+        }
+
+
+        /* Бонусные карточки от 720px */
+        @media (min-width: 720px) {
+            .container_bonuses{
+                padding-top: 10px;
+                flex-wrap: nowrap;
+                gap: 14px;
+            }
+
+            .container_bonus{
+                min-height: 0;
+                max-width: none;
+                padding: 20px 20px 20px;
+                flex: 1 1 0;
+            }
+
+            .container_bonus_hero{
+                max-width: 250px;
+            }
+
+            .container_bonus_title{
+                font-size: var(--font-size-small);
+            }
+
+            .container_bonus_tier{
+                gap: 6px;
+                font-size: 24px;
+            }
+        }
+
+
+        /* Колонки в статье */
+        .container_article_split{
+            flex-direction: column;
+            margin: 0 0 20px;
+            gap: 12px;
+            display: flex;
+        }
+
+        .container_article_split-aside{
+            flex: none;
+            margin: 0;
+        }
+
+        .container_article_split-aside img, .container_article_split-aside amp-img{
+            height: auto;
+            width: 100%;
+            max-width: 410px;
+            margin-inline: auto;
+            display: block;
+        }
+
+        .container_article_split-main{
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .container_article_split-main > :last-child{
+            margin-bottom: 0;
+        }
+
+
+        /* Колонки в статье от 640px */
+        @media (min-width: 640px) {
+            .container_article_split{
+                align-items: flex-start;
+                gap: 20px;
+                flex-direction: row;
+            }
+
+            .container_article_split-aside{
+                order: 2;
+                width: 410px;
+            }
+
+            .container_article_split-aside img, .container_article_split-aside amp-img{
+                margin-inline: 0;
+            }
+
+            .container_article_split-main{
+                order: 1;
+            }
+        }
+
+
+        /* Цитата */
+        .content_note{
+            border-radius: 13px;
+            border-left: 5px solid var(--gold);
+            background: #3e3e3e;
+            color: #fff;
+            padding: 12px;
+            margin: 5px 0 24px;
+        }
+
+        .content_note p{
+            margin: 0;
+            line-height: 22px;
+            font-size: var(--font-size);
+            color: #fff;
+
+        }
+
+
+        /* Таблица характеристик */
+        .wrapper_table{
+            margin: 0 0 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+
+        }
+
+        .wrapper_table::-webkit-scrollbar{
+            display: none;
+        }
+
+        .container_table{
+            font-size: var(--font-size-small);
+            border: 1px solid #333;
+            width: 100%;
+            background: #000;
+        }
+
+        .container_table_row{
+            grid-template-columns: 25% 1fr;
+            display: grid;
+        }
+
+        .container_table_th,
+        .container_table_td{
+            min-width: 0;
+            display: flex;
+            font-weight: 700;
+            color: #fff;
+            border-radius: 0;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 0;
+            padding: 0;
+            background: transparent;
+        }
+
+        .container_table_th{
+            border-right: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+
+        .container_table_td{
+            border-bottom: 1px solid #333;
+        }
+
+        .container_table_row:last-child .container_table_th,
+        .container_table_row:last-child .container_table_td{
+            border-bottom: 0;
+        }
+
+        .container_table_cell{
+            width: 100%;
+            background: var(--cell-body);
+            padding: 10.5px 10px;
+            box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+        }
+
+        .container_table_th .container_table_cell,
+        .container_table_cell_head{
+            background: linear-gradient(180deg, #424242 0%, #333333 100%);
+        }
+
+
+        /* Скриншот в статье */
+        .item_shot_btn{
+            width: 100%;
+            cursor: zoom-in;
+            background: var(--panel);
+            display: block;
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid var(--line);
+        }
+
+        .item_shot_btn img, .item_shot_btn amp-img{
+            object-position: 50% 50%;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+            transition: transform 0.25s ease;
+        }
+
+        .item_shot_btn:hover{
+            border-color: var(--gold-soft);
+        }
+
+        .item_shot_btn:hover img, .item_shot_btn:hover amp-img{
+            transform: scale(1.03);
+        }
+
+
+        /* Вопросы и ответы */
+        .container_faq{
+            display: flex;
+            flex-direction: column;
+            margin: 0 0 20px;
+            gap: 10px;
+        }
+
+        .container_faq_item{
+            margin: 0;
+        }
+
+        .container_faq_q {
+            text-transform: none;
+            letter-spacing: 0;
+            border-radius: 5px;
+
+            font-size: var(--font-size);
+            font-weight: 700;
+            color: var(--gold);
+            padding: 8px 10px;
+
+            border: 1px solid var(--gold-soft);
+            margin: 0 0 10px;
+            line-height: 1.3;
+
+        }
+
+        .container_article h3.container_faq_q{
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0 0 11px;
+            text-transform: uppercase;
+        }
+
+        .container_faq_a{
+            font-size: var(--font-size-small);
+            padding: 0 24px 10px;
+        }
+
+        .container_faq_a p{
+            color: #fff;
+            margin: 0;
+        }
+
+
+        /* Подписка */
+        .container_subscribe {
+            border-radius:20px;
+            color: #000;
+            border: 1px solid #d3d3d3;
+            margin: 24px 0;
+            padding: 15px 20px 0;
+            background: #000;
+            box-sizing: border-box;
+
+        }
+
+        .container_subscribe_title{
+            margin: 0 0 10px;
+            padding: 0;
+            text-align: center;
+            color: #fff;
+            line-height: 1;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .container_subscribe_text{
+            margin: 0 0 20px;
+            text-align: center;
+            line-height: 1.2;
+            font-size: var(--font-size-small);
+            color: #fff;
+        }
+
+        .container_subscribe_form{
+            gap: 0 20px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container_subscribe_field {
+            width:100%;
+            position:relative;
+            flex: 1 1 auto;
+        }
+
+        .container_subscribe_action{
+            width: 100%;
+            flex: 1 1 auto;
+            margin-bottom: 50px;
+        }
+
+        .container_subscribe_input {
+
+            padding: 10px;
+            background: #fff;
+            display: block;
+            font-family: inherit;
+            font-size: 15px;
+            box-sizing: border-box;
+            height: 42px;
+
+            border-radius: 5px;
+            box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            color: #000;
+            border: 1px solid #d3d3d3;
+
+        }
+
+        .container_subscribe_input::placeholder{
+            color: #8a8a8a;
+        }
+
+        .container_subscribe_input:focus,
+        .container_subscribe_input:focus-visible{
+            outline: 2px solid var(--gold);
+            outline-offset: 0;
+            border-color: var(--gold);
+        }
+
+        .container_subscribe_submit{
+            width: 100%;
+            min-height: 42px;
+            border-radius: 5px;
+        }
+
+        .container_subscribe_status{
+            margin: 0;
+            min-height: 23.2px;
+            padding: 3px 11px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #26b326;
+        }
+
+        .container_subscribe_status.error{
+            color: #ed3c3c;
+        }
+
+        .container_subscribe_messages{
+            min-height: 23.2px;
+            margin-top: 2px;
+        }
+
+
+        /* Содержание */
+        .container_toc{
+            padding: 20px 0;
+        }
+
+        .container_toc_title{
+            border: 1px solid var(--gold);
+            width: 100%;
+            color: #fff;
+            line-height: 1.65;
+            text-align: left;
+            font-family: inherit;
+            font-size: var(--font-size);
+            font-weight: 700;
+            margin: 0;
+            padding: 6px 15px;
+            background: transparent;
+            display: block;
+        }
+
+        .container_toc_list{
+
+            padding-left:24px;
+            font-size:  var(--font-size);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.45;
+            margin:14px 0 0;
+            list-style:decimal;
+        }
+
+        .container_toc_list li{
+            padding: 0 0 15px 11px;
+            color: #fff;
+        }
+
+        .container_toc_list li::marker{
+            font-weight: 700;
+            color:#fff;
+
+
+        }
+
+        .container_toc_list a,
+        .container_toc_list span[role="button"]{
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .container_toc_list a:hover,
+        .container_toc_list span[role="button"]:hover{
+            text-decoration: none;
+            color:var(--gold);
+
+        }
+
+
+        /* Подвал */
+        .container_footer{
+            background: var(--bg);
+        }
+
+        .container_footer_links{
+            background:#303030;
+
+        }
+
+        .container_footer_nav{
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .container_footer_col{
+            flex-direction: column;
+            display: flex;
+            align-items: center;
+        }
+
+        .container_footer_col a{
+            font-size: var(--font-size);
+            font-weight: 400;
+            color: var(--gold);
+            text-transform: uppercase;
+            line-height: 2;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            min-height: 62px;
+            letter-spacing: 0;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .container_footer_col a:hover{
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .container_footer_body{
+            padding: 20px 12px 15px;
+        }
+
+        .container_footer_pay,
+        .container_footer_providers{
+            list-style: none;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .container_footer_pay{
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .container_footer_pay li{
+            padding: 0 6px;
+            flex: 1 1 0;
+            min-width: 100px;
+            box-sizing: border-box;
+            max-width: 200px;
+
+        }
+
+        .container_footer_pay img, .container_footer_pay amp-img{
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            height: auto;
+            max-width: 160px;
+        }
+
+        .container_footer_providers{
+            gap: 0 10px;
+            padding: 0 0 20px;
+        }
+
+        .container_footer_providers li{
+            padding: 10px 8px;
+            flex: 0 0 auto;
+        }
+
+        .container_footer_providers img, .container_footer_providers amp-img{
+            width: auto ;
+            object-fit: contain;
+            display: block;
+            height: 44px;
+            max-width: 160px;
+            margin: 0 auto;
+        }
+
+        .container_footer_legal{
+            text-align: center;
+            color:  #fff;
+            padding: 20px 0 15px;
+            line-height: 1.45;
+            font-size: var(--font-size-small);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .container_footer_legal p{
+            margin: 0;
+        }
+
+        .container_footer_rates{
+            font-size: var(--font-size-small);
+            color: #fff;
+        }
+
+        @keyframes modal-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+
+        }
+
+
+        /* Адаптив */
+        @media (min-width: 600px) {
+            .content_section{
+                padding: 32px 0;
+            }
+
+            .container_games_grid{
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .item_winner{
+                flex: 0 0 calc((100% - 2 * 7px) / 3);
+            }
+
+            .container_footer_nav{
+                flex-direction: row;
+                flex-wrap: nowrap;
+            }
+
+            .container_footer_col{
+                min-width: 0;
+                flex: 1 1 0;
+            }
+        }
+
+        @media (min-width: 720px) {
+            .item_slide_img{
+                aspect-ratio: 4 / 1;
+            }
+
+            .item_slide_cta{
+                bottom: 30px;
+            }
+
+            .item_slide_cta .btn{
+                min-width: 200px;
+            }
+        }
+
+        @media (min-width: 900px) {
+            body{
+                font-size: var(--font-size);
+            }
+
+            .content_section{
+                padding: 32px 0;
+            }
+
+            :root{
+                --subnav-h: 54px;
+                --header-h: 80px;
+            }
+
+            .logo img, .logo amp-img{
+                height: 70px;
+                width: 192px;
+            }
+
+            .buttons{
+                gap: 15px;
+            }
+
+            .btn{
+                font-size: 17.5px;
+            }
+
+            .container_nav_list{
+                justify-content: center;
+                margin: 0 auto;
+                overflow: visible;
+            }
+
+            .container_nav_item{
+                margin: 12px 12px;
+                font-size: 19px;
+            }
+
+            .container_nav_ico{
+                margin-right: 8px;
+                width: 30px;
+                height: 30px;
+            }
+
+            .wrapper_slider_arrow{
+                width: 50px;
+                font-size: 50px;
+            }
+
+            .wrapper_slider_arrow_prev{
+                left: 20px;
+            }
+
+            .wrapper_slider_arrow_next{
+                right: 20px;
+            }
+
+            .container_games_inner{
+                padding: 32px 24px 0;
+            }
+
+            .container_offer .container{
+                padding-inline: 34px;
+            }
+
+            .container_games_title,
+            .container_winners_title,
+            .container_jackpot_title,
+            .container_howto_heading{
+                font-size: 30px;
+            }
+
+            .container_games_grid{
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .item_game_play{
+                height: 62px;
+                width: 62px;
+            }
+
+            .container_games_more{
+                padding: 32px 0 0;
+            }
+
+            .container_games_more .btn{
+                max-width: 32.333%;
+            }
+
+            .container_jackpot_inner{
+                padding: 0 24px;
+            }
+
+            .container_jackpot_img{
+                height: auto;
+                aspect-ratio: 1690 / 628;
+            }
+
+            .container_jackpot_slide::after{
+                display: none;
+            }
+
+            .container_jackpot_label{
+                font-size: clamp(20px, 1.76vw, 31px);
+                bottom: 33.1%;
+            }
+
+            .container_jackpot_sum{
+                font-size: clamp(44px, 4.66vw, 82px);
+                bottom: 15.1%;
+            }
+
+            .container_jackpot_cta{
+                bottom: 3.8%;
+            }
+
+            .container_howto_inner{
+                padding: 0 24px;
+            }
+
+            .container_howto_item{
+                width: 20%;
+                padding: 0 12px;
+            }
+
+            .container_howto_icon{
+                padding: 34px 0 22px;
+            }
+
+            .container_howto_icon img, .container_howto_icon amp-img{
+                max-height: 143px;
+            }
+
+            .container_howto_text{
+                font-size: 19px;
+                line-height: 21px;
+                min-height: 60px;
+            }
+
+            .container_howto_cta{
+                padding-bottom: 18px;
+            }
+
+            .container_winners_inner{
+                padding: 0 24px;
+            }
+
+            .item_winner{
+                flex: 0 0 calc((100% - 4 * 7px) / 5);
+            }
+
+            .item_winner_player{
+                font-size: 19px;
+            }
+
+            .item_winner_row{
+                font-size: 19px;
+            }
+
+            .item_winner_row_bet{
+                padding-top: 6px;
+            }
+
+            .item_winner_row_mult{
+                padding-bottom: 6px;
+            }
+
+            .item_winner_row span{
+                font-size: 21px;
+            }
+
+            .item_winner_sum{
+                padding-bottom: 18px;
+                font-size: 43px;
+                line-height: 36px;
+            }
+
+            .container_winners_arrow{
+                height: 70px;
+                width: 44px;
+                font-size: 46px;
+            }
+
+            .container_article > .container,
+            .container_footer_links > .container{
+                padding-inline: 34px;
+            }
+
+            .container_subscribe{
+                padding: 22px 22px 0;
+            }
+
+            .container_subscribe_text{
+                font-size: 15px;
+                margin-bottom: 24px;
+            }
+
+            .container_subscribe_field{
+                width: calc(70% - 20px);
+            }
+
+            .container_subscribe_action{
+                min-width: 160px;
+                width: 30%;
+            }
+
+            .container_subscribe_input,
+            .container_subscribe_submit{
+                height: 45px;
+                min-height: 42px;
+            }
+
+            .container_article{
+                font-size: var(--font-size);
+            }
+
+            .container_article_title{
+                font-size: var(--font-size-title);
+                margin-bottom: 20px;
+                line-height: 24px;
+            }
+
+            .container_article h2{
+                line-height: 24px;
+                font-size: var(--font-size-title);
+                margin-bottom: 30px;
+            }
+
+            .container_article h3{
+                margin-bottom: 20px;
+                line-height: 19.2px;
+                font-size: var(--font-size);
+            }
+
+            .container_table{
+                font-size: var(--font-size);
+            }
+        }
+
+        /* AMP-доработки */
+        .item_game_play amp-img {
+            margin-left: 3px;
+        }
+        amp-carousel.amp_hero,
+        amp-carousel.amp_jackpot {
+            width: 100%;
+            max-width: 100%;
+        }
+        amp-carousel .item_slide,
+        amp-carousel .container_jackpot_slide {
+            position: relative;
+            height: 100%;
+        }
+        amp-carousel.amp_hero .item_slide_img,
+        amp-carousel.amp_hero .item_slide_img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 50%;
+        }
+        amp-carousel.amp_jackpot .container_jackpot_img,
+        amp-carousel.amp_jackpot .container_jackpot_img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 50%;
+        }
+        .item_slide_cta { z-index: 2; }
+
+        amp-carousel.amp_winners {
+            width: 100%;
+            position: relative;
+        }
+        amp-carousel.amp_winners .item_winner {
+            display: inline-block;
+            vertical-align: top;
+            width: 160px;
+            margin-right: 7px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        amp-carousel.amp_winners .item_winner amp-img { margin: 0 auto; }
+        amp-carousel.amp_winners .item_winner_player {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        @media (min-width: 600px) {
+            amp-carousel.amp_winners .item_winner { width: 200px; }
+        }
+        @media (min-width: 900px) {
+            amp-carousel.amp_winners .item_winner { width: 220px; }
+        }
+
+        /* Стрелки победителей */
+        amp-carousel.amp_winners .amp-carousel-button {
+            font-size: 34px;
+            font-family: Arial, sans-serif;
+            top: 40%;
+            transition: opacity var(--ease), background-color var(--ease);
+            opacity: 0;
+            cursor: pointer;
+            line-height: 1;
+            background: rgba(0, 0, 0, 0.55);
+            background-image: none;
+            height: 54px;
+            position: absolute;
+            border: 0;
+            padding: 0;
+            z-index: 5;
+            color: #fff;
+            width: 34px;
+            outline: none;
+            box-shadow: none;
+            filter: none;
+            text-align: center;
+            transform: none;
+        }
+        .container_winners_slider:hover amp-carousel.amp_winners .amp-carousel-button:not(.amp-disabled),
+        amp-carousel.amp_winners .amp-carousel-button:focus-visible:not(.amp-disabled) {
+            opacity: 0.85;
+        }
+        amp-carousel.amp_winners .amp-carousel-button:hover:not(.amp-disabled),
+        amp-carousel.amp_winners .amp-carousel-button:focus:not(.amp-disabled),
+        amp-carousel.amp_winners .amp-carousel-button:active:not(.amp-disabled) {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.75);
+            background-image: none;
+        }
+        amp-carousel.amp_winners .amp-carousel-button-prev {
+            left: 0;
+        }
+        amp-carousel.amp_winners .amp-carousel-button-next {
+            right: 0;
+        }
+        amp-carousel.amp_winners .amp-carousel-button-prev::before {
+            content: "\2039";
+        }
+        amp-carousel.amp_winners .amp-carousel-button-next::before {
+            content: "\203A";
+        }
+        amp-carousel.amp_winners .amp-carousel-button.amp-disabled {
+            opacity: 0;
+            pointer-events: none;
+        }
+        @media (min-width: 900px) {
+            amp-carousel.amp_winners .amp-carousel-button {
+                height: 70px;
+                width: 44px;
+                font-size: 46px;
+            }
+        }
+
+        .container_howto_icon amp-img {
+            margin: 0 auto;
+            display: block;
+            max-height: 96px;
+            max-width: 100%;
+            width: auto;
+        }
+        .container_howto_icon amp-img img {
+            max-height: 96px;
+            object-fit: contain;
+        }
+        @media (min-width: 900px) {
+            .container_howto_icon amp-img,
+            .container_howto_icon amp-img img { max-height: 143px; }
+        }
+        .container_howto_list { width: 100%; }
+        .container_howto_item {
+            box-sizing: border-box;
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+        @media (min-width: 900px) {
+            .container_howto_item {
+                flex: 0 0 20%;
+                max-width: 20%;
+            }
+        }
+
+        .container_games_grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        .item_game {
+            min-width: 0;
+            max-width: 100%;
+            list-style: none;
+        }
+        .item_game_btn {
+            text-decoration: none;
+            color: inherit;
+            max-width: 100%;
+        }
+        .item_game_btn amp-img {
+            width: 100%;
+            max-width: 100%;
+        }
+        .item_game_btn amp-img img { object-fit: cover; }
+
+        .item_game_play { opacity: 0; }
+        .item_game_btn:is(:hover, :focus-visible) .item_game_play,
+        .item_game_btn:focus-within .item_game_play {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .logo { width: 118px; }
+        .logo amp-img { width: 118px; max-width: 100%; }
+        @media (min-width: 600px) {
+            .container_games_grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 900px) {
+            .container_games_grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+            .logo { width: 192px; }
+            .logo amp-img { width: 192px; }
+        }
+
+        .container_jackpot_slide {
+            position: relative;
+            min-height: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .item_winner amp-img img { object-fit: cover; }
+
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
+        html[style*="margin-right"] {
+            background: #000 url("../img/pattern.png") 50% 50% repeat;
+        }
+
+        html[style*="margin-right"] body {
+            container-type: inline-size;
+        }
+
+        html[style*="margin-right"] .container_header,
+        html[style*="margin-right"] .container_nav {
+            padding-right: calc(100vw - 100cqw);
+        }
+        .container_nav,
+        .container_nav_list {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        .container_nav_item { margin: 6px 8px; }
+        .wrapper_slider,
+        .container_slider {
+            max-width: 100%;
+            overflow: hidden;
+        }
+        amp-carousel.amp_hero amp-img,
+        amp-carousel.amp_jackpot amp-img { max-width: 100%; }
+
+        .container_bonus_info { position: absolute; }
+        amp-img.container_bonus_hero img,
+        .container_bonus_hero img { object-fit: contain; }
+        amp-img.container_bonus_crown img,
+        .container_bonus_crown img { object-fit: contain; }
+        amp-img.container_bonus_arrow img,
+        .container_bonus_arrow img { object-fit: contain; }
+
+        /* Кнопка Play */
+        @media (min-width: 900px) {
+            .item_game_play {
+                width: 62px;
+                height: 62px;
+            }
+        }
+
+        /* Слайдер акций AMP */
+        amp-carousel.amp_hero {
+            aspect-ratio: 2 / 1;
+        }
+        amp-carousel.amp_hero .item_slide,
+        amp-carousel.amp_hero .item_slide_img,
+        amp-carousel.amp_hero amp-img {
+            height: 100%;
+        }
+        @media (min-width: 720px) {
+            amp-carousel.amp_hero {
+                aspect-ratio: 4 / 1;
+            }
+        }
+
+        /* Джекпот AMP */
+        amp-carousel.amp_jackpot {
+            aspect-ratio: 390 / 250;
+        }
+        @media (min-width: 900px) {
+            amp-carousel.amp_jackpot {
+                aspect-ratio: 1690 / 628;
+            }
+        }
+
+        /* Стрелки слайдера AMP */
+        amp-carousel.amp_hero .amp-carousel-button,
+        amp-carousel.amp_jackpot .amp-carousel-button {
+            transform: translateY(-50%);
+            width: 34px;
+            line-height: 1;
+            z-index: 10;
+            opacity: 0;
+            height: 54px;
+            transition: opacity var(--ease);
+            font-size: 38px;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            background: transparent;
+            background-image: none;
+            border: 0;
+            padding: 0;
+            position: absolute;
+            top: 50%;
+            color: #fff;
+            outline: none;
+            box-shadow: none;
+            filter: none;
+            text-align: center;
+        }
+        amp-carousel.amp_hero:hover .amp-carousel-button,
+        amp-carousel.amp_jackpot:hover .amp-carousel-button,
+        amp-carousel.amp_hero .amp-carousel-button:focus-visible,
+        amp-carousel.amp_jackpot .amp-carousel-button:focus-visible{
+            opacity: 0.75;
+        }
+
+        amp-carousel.amp_hero .amp-carousel-button:hover,
+        amp-carousel.amp_hero .amp-carousel-button:focus,
+        amp-carousel.amp_hero .amp-carousel-button:active,
+        amp-carousel.amp_jackpot .amp-carousel-button:hover,
+        amp-carousel.amp_jackpot .amp-carousel-button:focus,
+        amp-carousel.amp_jackpot .amp-carousel-button:active {
+            background: transparent;
+            background-image: none;
+            opacity: 1;
+            outline: none;
+            box-shadow: none;
+        }
+        amp-carousel.amp_hero .amp-carousel-button-prev,
+        amp-carousel.amp_jackpot .amp-carousel-button-prev {
+            left: 4px;
+        }
+        amp-carousel.amp_hero .amp-carousel-button-next,
+        amp-carousel.amp_jackpot .amp-carousel-button-next {
+            right: 4px;
+        }
+        amp-carousel.amp_hero .amp-carousel-button-prev::before,
+        amp-carousel.amp_jackpot .amp-carousel-button-prev::before {
+            content: "\2039";
+        }
+        amp-carousel.amp_hero .amp-carousel-button-next::before,
+        amp-carousel.amp_jackpot .amp-carousel-button-next::before {
+            content: "\203A";
+        }
+        @media (min-width: 900px) {
+            amp-carousel.amp_hero .amp-carousel-button,
+            amp-carousel.amp_jackpot .amp-carousel-button {
+                width: 50px;
+                font-size: 50px;
+            }
+            amp-carousel.amp_hero .amp-carousel-button-prev,
+            amp-carousel.amp_jackpot .amp-carousel-button-prev {
+                left: 20px;
+            }
+            amp-carousel.amp_hero .amp-carousel-button-next,
+            amp-carousel.amp_jackpot .amp-carousel-button-next {
+                right: 20px;
+            }
+        }
+
+
+        /* Длинный текст не раздвигает страницу */
+        .buttons{
+            min-width: 0;
+            flex: 1 1 auto;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .buttons .btn,
+        .container_offer_row .btn,
+        .container_offer_text,
+        .container_offer_kicker,
+        .container_offer_code,
+        .container_games_title,
+        .container_howto_text,
+        .container_jackpot_label,
+        .container_jackpot_sum,
+        .item_winner_player,
+        .item_winner_row,
+        .item_winner_sum,
+        .container_article h1,
+        .container_article h2,
+        .container_article p,
+        .container_article li,
+        .container_faq_q,
+        .container_faq_a,
+        .container_bonus_title,
+        .container_bonus_tier,
+        .container_footer_col a{
+            overflow-wrap: anywhere;
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .container_bonus,
+        .item_winner,
+        .wrapper_slider_arrow,
+        .container_winners_arrow,
+        amp-carousel .amp-carousel-button{
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .container_footer_col{
+            min-width: 0;
+            max-width: 100%;
+        }
+    </style>
 </head>
-<body></body>
+<body>
+<!-- Шапка -->
+<header class="container_header">
+    <div class="container wrapper_content">
+        <a class="logo" href="#top" aria-label="Riobet — на главную">
+            <amp-img src="../img/logo.svg" width="175" height="56" layout="intrinsic" alt="Riobet"></amp-img>
+        </a>
+
+        <div class="buttons">
+            <button class="btn btn_login" type="button" on="tap:login-modal">Вход</button>
+            <button class="btn btn_gold" type="button" on="tap:signup-modal">Регистрация</button>
+        </div>
+    </div>
+</header>
+<!-- /Шапка -->
+
+<!-- Навигация -->
+<nav class="container_nav" aria-label="Разделы казино">
+    <ul class="container container_nav_list">
+        <li>
+            <a class="container_nav_item" href="https://riobet.com/pt-br/">
+            <span class="container_nav_ico" aria-hidden="true">
+              <amp-img src="../img/icons/nav-official.svg" layout="fill" alt=""></amp-img>
+            </span>
+                Официальный сайт
+            </a>
+        </li>
+        <li>
+            <a class="container_nav_item" href="#review">
+            <span class="container_nav_ico" aria-hidden="true">
+              <amp-img src="../img/icons/nav-money.svg" layout="fill" alt=""></amp-img>
+            </span>
+                Игра на деньги
+            </a>
+        </li>
+        <li>
+            <a class="container_nav_item" href="#bonuses-promo">
+            <span class="container_nav_ico" aria-hidden="true">
+              <amp-img src="../img/icons/nav-bonus.svg" layout="fill" alt=""></amp-img>
+            </span>
+                Бонусы
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<main>
+    <section class="container_offer" id="top" aria-label="Приветственный бонус">
+        <div class="container">
+            <div class="container_offer_box">
+                <p class="container_offer_kicker">Приветственный бонус</p>
+                <p class="container_offer_text">100% на первый депозит и 150 фриспинов</p>
+                <div class="container_offer_row">
+                    <p class="container_offer_code">
+                        <span class="container_offer_code_label">Промокод:</span>
+                        <span class="container_offer_code_value">RIO100</span>
+                    </p>
+                    <button class="btn btn_gold" type="button" on="tap:bonus-modal">Забрать бонус</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container_slider" aria-label="Акции казино">
+        <div class="container">
+            <div class="content_panel">
+                <amp-carousel class="amp_hero" width="2" height="1" layout="responsive" type="slides" autoplay delay="6000" role="region" aria-label="Акции">
+                    <div class="item_slide">
+                        <amp-img class="item_slide_img" src="../img/banner-live.webp" srcset="../img/banner-live-960.webp 960w, ../img/banner-live.webp 1440w" sizes="100vw" width="2" height="1" layout="responsive" alt="Играй в прямом эфире — live-казино Riobet с реальными дилерами"></amp-img>
+                        <span class="item_slide_cta"><button class="btn btn_green" type="button" on="tap:play-modal">Играть</button></span>
+                    </div>
+                    <div class="item_slide">
+                        <amp-img class="item_slide_img" src="../img/banner-welcome.webp" srcset="../img/banner-welcome-960.webp 960w, ../img/banner-welcome.webp 1440w" sizes="100vw" width="2" height="1" layout="responsive" alt="Приветственный пакет Riobet: 100% к депозиту и 150 фриспинов"></amp-img>
+                        <span class="item_slide_cta"><button class="btn btn_green" type="button" on="tap:play-modal">Играть</button></span>
+                    </div>
+                    <div class="item_slide">
+                        <amp-img class="item_slide_img" src="../img/banner-drops.webp" srcset="../img/banner-drops-960.webp 960w, ../img/banner-drops.webp 1440w" sizes="100vw" width="2" height="1" layout="responsive" alt="Турнир Drops &amp; Wins с призовым фондом в Riobet"></amp-img>
+                        <span class="item_slide_cta"><button class="btn btn_green" type="button" on="tap:play-modal">Играть</button></span>
+                    </div>
+                </amp-carousel>
+            </div>
+        </div>
+    </section>
+    <span id="games" class="scroll-target"></span>
+    <section aria-labelledby="games-title">
+        <div class="container">
+            <div class="container_games_inner">
+                <h2 class="container_games_title" id="games-title">Слоты</h2>
+
+                <div id="games-panel">
+                    <ul class="container_games_grid" id="games-grid">
+                        <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Hot Fruits 100'}),game-modal" aria-label="Играть в Hot Fruits 100">
+                  <amp-img src="../img/slots/hot-fruits-100.webp" width="390" height="260" layout="responsive" alt="Hot Fruits 100 — Amatic" srcset="../img/slots/hot-fruits-100-240.webp 240w, ../img/slots/hot-fruits-100.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Hot Fruits 100</span>
+                </span>
+                        </li>
+                        <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Aztec Sun'}),game-modal" aria-label="Играть в Aztec Sun">
+                  <amp-img src="../img/slots/aztec-sun-hold-and-sun.webp" width="390" height="260" layout="responsive" alt="Aztec Sun — Amatic" srcset="../img/slots/aztec-sun-hold-and-sun-240.webp 240w, ../img/slots/aztec-sun-hold-and-sun.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Aztec Sun</span>
+                </span>
+                        </li>
+                        <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Book of Ra'}),game-modal" aria-label="Играть в Book of Ra">
+                  <amp-img src="../img/slots/book-of-ra.webp" width="390" height="260" layout="responsive" alt="Book of Ra — Novomatic" srcset="../img/slots/book-of-ra-240.webp 240w, ../img/slots/book-of-ra.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Book of Ra</span>
+                </span>
+                        </li>
+                        <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Burning Hot'}),game-modal" aria-label="Играть в Burning Hot">
+                  <amp-img src="../img/slots/burning-hot.webp" width="390" height="260" layout="responsive" alt="Burning Hot — EGT" srcset="../img/slots/burning-hot-240.webp 240w, ../img/slots/burning-hot.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Burning Hot</span>
+                </span>
+                        </li>
+                        <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Razor Shark'}),game-modal" aria-label="Играть в Razor Shark">
+                  <amp-img src="../img/slots/razor-shark.webp" width="390" height="260" layout="responsive" alt="Razor Shark — Push Gaming" srcset="../img/slots/razor-shark-240.webp 240w, ../img/slots/razor-shark.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Razor Shark</span>
+                </span>
+                        </li>
+                        <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Book of Dead'}),game-modal" aria-label="Играть в Book of Dead">
+                  <amp-img src="../img/slots/book-of-dead.webp" width="390" height="260" layout="responsive" alt="Book of Dead — Play’n GO" srcset="../img/slots/book-of-dead-240.webp 240w, ../img/slots/book-of-dead.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Book of Dead</span>
+                </span>
+                        </li>
+                    </ul>
+
+                    <div class="container_games_more">
+                        <button class="btn btn_gold btn_block" type="button" on="tap:games-modal">Смотреть все игры</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Слоты -->
+
+    <!-- Победители -->
+    <section class="container_winners" aria-labelledby="winners-title">
+        <div class="container">
+            <div class="container_winners_inner">
+                <h2 class="container_winners_title" id="winners-title">Сейчас выигрывают</h2>
+                <div class="container_winners_slider">
+                    <amp-carousel class="amp_winners" height="290" layout="fixed-height" type="carousel" controls role="region" aria-label="Сейчас выигрывают">
+                        <div class="item_winner">
+                            <p class="item_winner_player">Ома***</p>
+
+                            <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Fruit Cocktail'}),game-modal" aria-label="Играть в Fruit Cocktail">
+                  <amp-img src="../img/slots/fruit-cocktail.webp" width="390" height="260" layout="responsive" alt="Fruit Cocktail — Igrosoft" srcset="../img/slots/fruit-cocktail-240.webp 240w, ../img/slots/fruit-cocktail.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                      <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                    </span>
+                  <span class="visually-hidden">Играть в Fruit Cocktail</span>
+                </span>
+
+                            <p class="item_winner_row item_winner_row_bet">ставка:<span>36 $</span></p>
+                            <p class="item_winner_row item_winner_row_mult">выиграл:<span>x 58</span></p>
+                            <p class="item_winner_sum">3892 $</p>
+                        </div><div class="item_winner">
+                        <p class="item_winner_player">Ать***</p>
+
+                        <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Gonzo’s Quest Megaways'}),game-modal" aria-label="Играть в Gonzo’s Quest Megaways">
+                  <amp-img src="../img/slots/gonzos-quest.webp" width="390" height="260" layout="responsive" alt="Gonzo’s Quest Megaways — Red Tiger" srcset="../img/slots/gonzos-quest-240.webp 240w, ../img/slots/gonzos-quest.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                      <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                    </span>
+                  <span class="visually-hidden">Играть в Gonzo’s Quest Megaways</span>
+                </span>
+
+                        <p class="item_winner_row item_winner_row_bet">ставка:<span>67 $</span></p>
+                        <p class="item_winner_row item_winner_row_mult">выиграл:<span>x 28</span></p>
+                        <p class="item_winner_sum">2413 $</p>
+                    </div><div class="item_winner">
+                        <p class="item_winner_player">Lyj***</p>
+
+                        <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Billyonaire'}),game-modal" aria-label="Играть в Billyonaire">
+                  <amp-img src="../img/slots/billyonaire.webp" width="390" height="260" layout="responsive" alt="Billyonaire — Amatic" srcset="../img/slots/billyonaire-240.webp 240w, ../img/slots/billyonaire.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                      <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                    </span>
+                  <span class="visually-hidden">Играть в Billyonaire</span>
+                </span>
+
+                        <p class="item_winner_row item_winner_row_bet">ставка:<span>36 $</span></p>
+                        <p class="item_winner_row item_winner_row_mult">выиграл:<span>x 77</span></p>
+                        <p class="item_winner_sum">3510 $</p>
+                    </div><div class="item_winner">
+                        <p class="item_winner_player">Kif***</p>
+
+                        <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Book of Aztec'}),game-modal" aria-label="Играть в Book of Aztec">
+                  <amp-img src="../img/slots/book-of-aztec.webp" width="390" height="260" layout="responsive" alt="Book of Aztec — Amatic" srcset="../img/slots/book-of-aztec-240.webp 240w, ../img/slots/book-of-aztec.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                      <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                    </span>
+                  <span class="visually-hidden">Играть в Book of Aztec</span>
+                </span>
+
+                        <p class="item_winner_row item_winner_row_bet">ставка:<span>57 $</span></p>
+                        <p class="item_winner_row item_winner_row_mult">выиграл:<span>x 70</span></p>
+                        <p class="item_winner_sum">2723 $</p>
+                    </div><div class="item_winner">
+                        <p class="item_winner_player">Fru***</p>
+
+                        <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Hot Fruits 100'}),game-modal" aria-label="Играть в Hot Fruits 100">
+                  <amp-img src="../img/slots/hot-fruits-100.webp" width="390" height="260" layout="responsive" alt="Hot Fruits 100 — Amatic" srcset="../img/slots/hot-fruits-100-240.webp 240w, ../img/slots/hot-fruits-100.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                      <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                    </span>
+                  <span class="visually-hidden">Играть в Hot Fruits 100</span>
+                </span>
+
+                        <p class="item_winner_row item_winner_row_bet">ставка:<span>49 $</span></p>
+                        <p class="item_winner_row item_winner_row_mult">выиграл:<span>x 48</span></p>
+                        <p class="item_winner_sum">2096 $</p>
+                    </div><div class="item_winner">
+                        <p class="item_winner_player">Ден***</p>
+
+                        <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Razor Shark'}),game-modal" aria-label="Играть в Razor Shark">
+                  <amp-img src="../img/slots/razor-shark.webp" width="390" height="260" layout="responsive" alt="Razor Shark — Push Gaming" srcset="../img/slots/razor-shark-240.webp 240w, ../img/slots/razor-shark.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                      <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                    </span>
+                  <span class="visually-hidden">Играть в Razor Shark</span>
+                </span>
+
+                        <p class="item_winner_row item_winner_row_bet">ставка:<span>25 $</span></p>
+                        <p class="item_winner_row item_winner_row_mult">выиграл:<span>x 92</span></p>
+                        <p class="item_winner_sum">2300 $</p>
+                    </div><div class="item_winner">
+                        <p class="item_winner_player">Wol***</p>
+
+                        <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Book of Dead'}),game-modal" aria-label="Играть в Book of Dead">
+                  <amp-img src="../img/slots/book-of-dead.webp" width="390" height="260" layout="responsive" alt="Book of Dead — Play’n GO" srcset="../img/slots/book-of-dead-240.webp 240w, ../img/slots/book-of-dead.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                      <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                    </span>
+                  <span class="visually-hidden">Играть в Book of Dead</span>
+                </span>
+
+                        <p class="item_winner_row item_winner_row_bet">ставка:<span>40 $</span></p>
+                        <p class="item_winner_row item_winner_row_mult">выиграл:<span>x 35</span></p>
+                        <p class="item_winner_sum">1400 $</p>
+                    </div><div class="item_winner">
+                        <p class="item_winner_player">Мак***</p>
+
+                        <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Immersive Roulette'}),game-modal" aria-label="Играть в Immersive Roulette">
+                  <amp-img src="../img/live/immersive-evo.webp" width="390" height="260" layout="responsive" alt="Immersive Roulette — Evolution" srcset="../img/live/immersive-evo-240.webp 240w, ../img/live/immersive-evo.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                      <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                    </span>
+                  <span class="visually-hidden">Играть в Immersive Roulette</span>
+                </span>
+
+                        <p class="item_winner_row item_winner_row_bet">ставка:<span>80 $</span></p>
+                        <p class="item_winner_row item_winner_row_mult">выиграл:<span>x 36</span></p>
+                        <p class="item_winner_sum">2880 $</p>
+                    </div><div class="item_winner">
+                        <p class="item_winner_player">Sev***</p>
+
+                        <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Lucky Streak 3'}),game-modal" aria-label="Играть в Lucky Streak 3">
+                  <amp-img src="../img/slots/lucky-streak-3.webp" width="390" height="260" layout="responsive" alt="Lucky Streak 3 — Endorphina" srcset="../img/slots/lucky-streak-3-240.webp 240w, ../img/slots/lucky-streak-3.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                      <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                    </span>
+                  <span class="visually-hidden">Играть в Lucky Streak 3</span>
+                </span>
+
+                        <p class="item_winner_row item_winner_row_bet">ставка:<span>30 $</span></p>
+                        <p class="item_winner_row item_winner_row_mult">выиграл:<span>x 64</span></p>
+                        <p class="item_winner_sum">1920 $</p>
+                    </div><div class="item_winner">
+                        <p class="item_winner_player">Гри***</p>
+
+                        <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Resident'}),game-modal" aria-label="Играть в Resident">
+                  <amp-img src="../img/slots/resident.webp" width="390" height="260" layout="responsive" alt="Resident — Igrosoft" srcset="../img/slots/resident-240.webp 240w, ../img/slots/resident.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                      <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                    </span>
+                  <span class="visually-hidden">Играть в Resident</span>
+                </span>
+
+                        <p class="item_winner_row item_winner_row_bet">ставка:<span>45 $</span></p>
+                        <p class="item_winner_row item_winner_row_mult">выиграл:<span>x 51</span></p>
+                        <p class="item_winner_sum">2295 $</p>
+                    </div>
+                    </amp-carousel>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container_jackpot" aria-labelledby="jackpot-title">
+        <div class="container">
+            <div class="container_jackpot_inner">
+                <h2 class="container_jackpot_title" id="jackpot-title">Джекпоты</h2>
+                <div class="content_panel">
+                    <amp-carousel class="amp_jackpot" width="390" height="250" layout="responsive" type="slides" autoplay delay="6000" role="region" aria-label="Джекпоты">
+                        <div class="item_slide container_jackpot_slide">
+                            <amp-img class="container_jackpot_img" src="../img/jackpot/ozwins.webp" srcset="../img/jackpot/ozwins-960.webp 960w, ../img/jackpot/ozwins.webp 1760w" sizes="100vw" width="390" height="250" layout="fill" alt="Джекпот в игре Ozwin’s Jackpots"></amp-img>
+                            <p class="container_jackpot_label">Сумма джекпота сейчас</p>
+                            <p class="container_jackpot_sum">727 364 ₴</p>
+                            <span class="container_jackpot_cta"><button class="btn btn_green" type="button" on="tap:play-modal">Испытать удачу</button></span>
+                        </div>
+                        <div class="item_slide container_jackpot_slide">
+                            <amp-img class="container_jackpot_img" src="../img/jackpot/divine.webp" srcset="../img/jackpot/divine-960.webp 960w, ../img/jackpot/divine.webp 1760w" sizes="100vw" width="390" height="250" layout="fill" alt="Джекпот в игре Divine Fortune"></amp-img>
+                            <p class="container_jackpot_label">Сумма джекпота сейчас</p>
+                            <p class="container_jackpot_sum">1 438 254 ₴</p>
+                            <span class="container_jackpot_cta"><button class="btn btn_green" type="button" on="tap:play-modal">Испытать удачу</button></span>
+                        </div>
+                        <div class="item_slide container_jackpot_slide">
+                            <amp-img class="container_jackpot_img" src="../img/jackpot/holmes.webp" srcset="../img/jackpot/holmes-960.webp 960w, ../img/jackpot/holmes.webp 1760w" sizes="100vw" width="390" height="250" layout="fill" alt="Джекпот в игре Holmes and the Stolen Stones"></amp-img>
+                            <p class="container_jackpot_label">Сумма джекпота сейчас</p>
+                            <p class="container_jackpot_sum">379 664 ₴</p>
+                            <span class="container_jackpot_cta"><button class="btn btn_green" type="button" on="tap:play-modal">Испытать удачу</button></span>
+                        </div>
+                    </amp-carousel>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Джекпот -->
+
+    <!-- Live Casino -->
+    <span id="live" class="scroll-target"></span>
+    <section class="container_games_live" aria-labelledby="live-title">
+        <div class="container">
+            <div class="container_games_inner">
+                <h2 class="container_games_title" id="live-title">Live Casino</h2>
+
+                <ul class="container_games_grid">
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Auto Roulette'}),game-modal" aria-label="Играть в Auto Roulette">
+                  <amp-img src="../img/live/auto-roulette-evo.webp" width="390" height="260" layout="responsive" alt="Auto Roulette — Evolution" srcset="../img/live/auto-roulette-evo-240.webp 240w, ../img/live/auto-roulette-evo.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Auto Roulette</span>
+                </span>
+                    </li>
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Auto Roulette La Partage'}),game-modal" aria-label="Играть в Auto Roulette La Partage">
+                  <amp-img src="../img/live/autoroulette-laportage-evo.webp" width="390" height="260" layout="responsive" alt="Auto Roulette La Partage — Evolution" srcset="../img/live/autoroulette-laportage-evo-240.webp 240w, ../img/live/autoroulette-laportage-evo.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Auto Roulette La Partage</span>
+                </span>
+                    </li>
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Blaze Roulette'}),game-modal" aria-label="Играть в Blaze Roulette">
+                  <amp-img src="../img/live/blaze-roulette.webp" width="390" height="260" layout="responsive" alt="Blaze Roulette — Evolution" srcset="../img/live/blaze-roulette-240.webp 240w, ../img/live/blaze-roulette.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Blaze Roulette</span>
+                </span>
+                    </li>
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Casino Floor Live Roulette'}),game-modal" aria-label="Играть в Casino Floor Live Roulette">
+                  <amp-img src="../img/live/casino-floor-live-roulette.webp" width="390" height="260" layout="responsive" alt="Casino Floor Live Roulette — Evolution" srcset="../img/live/casino-floor-live-roulette-240.webp 240w, ../img/live/casino-floor-live-roulette.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Casino Floor Live Roulette</span>
+                </span>
+                    </li>
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Grand Live Roulette'}),game-modal" aria-label="Играть в Grand Live Roulette">
+                  <amp-img src="../img/live/grand-live-roulette.webp" width="390" height="260" layout="responsive" alt="Grand Live Roulette — Evolution" srcset="../img/live/grand-live-roulette-240.webp 240w, ../img/live/grand-live-roulette.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Grand Live Roulette</span>
+                </span>
+                    </li>
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Immersive Roulette'}),game-modal" aria-label="Играть в Immersive Roulette">
+                  <amp-img src="../img/live/immersive-evo.webp" width="390" height="260" layout="responsive" alt="Immersive Roulette — Evolution" srcset="../img/live/immersive-evo-240.webp 240w, ../img/live/immersive-evo.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Immersive Roulette</span>
+                </span>
+                    </li>
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Lightning Roulette'}),game-modal" aria-label="Играть в Lightning Roulette">
+                  <amp-img src="../img/live/lighting-roulette-icon.webp" width="390" height="260" layout="responsive" alt="Lightning Roulette — Evolution" srcset="../img/live/lighting-roulette-icon-240.webp 240w, ../img/live/lighting-roulette-icon.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Lightning Roulette</span>
+                </span>
+                    </li>
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Roulette Live'}),game-modal" aria-label="Играть в Roulette Live">
+                  <amp-img src="../img/live/roulette-evo.webp" width="390" height="260" layout="responsive" alt="Roulette Live — Evolution" srcset="../img/live/roulette-evo-240.webp 240w, ../img/live/roulette-evo.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Roulette Live</span>
+                </span>
+                    </li>
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Roulette Live'}),game-modal" aria-label="Играть в Roulette Live">
+                  <amp-img src="../img/live/roulette-live-ezugi.webp" width="390" height="260" layout="responsive" alt="Roulette Live — Ezugi" srcset="../img/live/roulette-live-ezugi-240.webp 240w, ../img/live/roulette-live-ezugi.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Roulette Live</span>
+                </span>
+                    </li>
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Roulette Russian'}),game-modal" aria-label="Играть в Roulette Russian">
+                  <amp-img src="../img/live/roulette-russian-evo.webp" width="390" height="260" layout="responsive" alt="Roulette Russian — Evolution" srcset="../img/live/roulette-russian-evo-240.webp 240w, ../img/live/roulette-russian-evo.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Roulette Russian</span>
+                </span>
+                    </li>
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Speed Roulette Live'}),game-modal" aria-label="Играть в Speed Roulette Live">
+                  <amp-img src="../img/live/roulette-speed-live-evo.webp" width="390" height="260" layout="responsive" alt="Speed Roulette Live — Evolution" srcset="../img/live/roulette-speed-live-evo-240.webp 240w, ../img/live/roulette-speed-live-evo.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Speed Roulette Live</span>
+                </span>
+                    </li>
+                    <li class="item_game">
+                <span role="button" tabindex="0" class="item_game_btn" on="tap:AMP.setState({gameName:'Ruleta del Sol'}),game-modal" aria-label="Играть в Ruleta del Sol">
+                  <amp-img src="../img/live/ruleta-del-sol-icon.webp" width="390" height="260" layout="responsive" alt="Ruleta del Sol — Evolution" srcset="../img/live/ruleta-del-sol-icon-240.webp 240w, ../img/live/ruleta-del-sol-icon.webp 390w" sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw"></amp-img>
+                  <span class="item_game_play" aria-hidden="true">
+                    <amp-img src="../img/icons/play.svg" width="20" height="22" layout="fixed" alt=""></amp-img>
+                  </span>
+                  <span class="visually-hidden">Играть в Ruleta del Sol</span>
+                </span>
+                    </li>
+                </ul>
+
+                <div class="container_games_more">
+                    <button class="btn btn_gold btn_block" type="button" on="tap:games-modal">Смотреть все игры</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span id="howto" class="scroll-target"></span>
+    <section class="container_howto" aria-labelledby="howto-title">
+        <div class="container">
+            <div class="container_howto_inner">
+                <h2 class="container_howto_heading" id="howto-title">Как начать играть?</h2>
+
+                <ol class="container_howto_list">
+                    <li class="container_howto_item">
+                        <div class="container_howto_icon">
+                            <amp-img src="../img/icons/clock.svg" width="96" height="95" layout="fixed" alt=""></amp-img>
+                        </div>
+                        <p class="container_howto_text">Зарегистрируйтесь за 15 секунд</p>
+                        <div class="container_howto_cta">
+                            <button class="btn btn_gold btn_block" type="button" on="tap:play-modal">Начать</button>
+                        </div>
+                    </li>
+                    <li class="container_howto_item">
+                        <div class="container_howto_icon">
+                            <amp-img src="../img/icons/gift-color.svg" width="96" height="95" layout="fixed" alt=""></amp-img>
+                        </div>
+                        <p class="container_howto_text">Получите фриспины</p>
+                        <div class="container_howto_cta">
+                            <button class="btn btn_gold btn_block" type="button" on="tap:play-modal">Получить</button>
+                        </div>
+                    </li>
+                    <li class="container_howto_item">
+                        <div class="container_howto_icon">
+                            <amp-img src="../img/icons/money.svg" width="96" height="92" layout="fixed" alt=""></amp-img>
+                        </div>
+                        <p class="container_howto_text">Сделайте депозит</p>
+                        <div class="container_howto_cta">
+                            <button class="btn btn_gold btn_block" type="button" on="tap:play-modal">Депозит</button>
+                        </div>
+                    </li>
+                    <li class="container_howto_item">
+                        <div class="container_howto_icon">
+                            <amp-img src="../img/icons/slots.svg" width="96" height="96" layout="fixed" alt=""></amp-img>
+                        </div>
+                        <p class="container_howto_text">Играйте и выигрывайте</p>
+                        <div class="container_howto_cta">
+                            <button class="btn btn_gold btn_block" type="button" on="tap:play-modal">Играть</button>
+                        </div>
+                    </li>
+                    <li class="container_howto_item">
+                        <div class="container_howto_icon">
+                            <amp-img src="../img/icons/card.svg" width="70" height="96" layout="fixed" alt=""></amp-img>
+                        </div>
+                        <p class="container_howto_text">Выводите за 15 минут</p>
+                        <div class="container_howto_cta">
+                            <button class="btn btn_gold btn_block" type="button" on="tap:play-modal">Вывести</button>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <span id="review" class="scroll-target"></span>
+    <article
+            class="content_section container_article container_article_pb"
+            lang="ru"
+            aria-labelledby="review-title"
+    >
+        <div class="container">
+            <h1 class="container_article_title" id="review-title">
+                Обзор Риобет
+                <amp-img class="container_article_title-ico" src="../img/icons/slot-machine.png?v=3" width="22" height="22" layout="fixed" alt=""></amp-img>
+                лицензионное онлайн казино на деньги с моментальным выводом
+            </h1>
+            <div class="container_subscribe">
+                <p class="container_subscribe_title">Ты заслуживаешь только лучшие бонусы!</p>
+                <p class="container_subscribe_text">
+                    Подписывайся на нашу рассылку и получай эксклюзивные предложения
+                    первым. В нас только полезная информация без рекламы и спама
+                </p>
+
+                <div class="container_subscribe_form" id="subscribe">
+                    <div class="container_subscribe_field">
+                        <label class="visually-hidden" for="email">Ваш email</label>
+                        <input class="container_subscribe_input" type="email" id="email" name="email"
+                               placeholder="Ваш email" autocomplete="email"
+                               aria-describedby="subscribe-status"
+                               on="input-throttled:AMP.setState({email: event.value})">
+
+                        <div  class="container_subscribe_messages" id="subscribe-status" role="status" aria-live="polite">
+                            <p class="container_subscribe_status error" hidden [hidden]="!subscribeTried || subscribeOk">Введите корректный e-mail, например name@mail.com</p>
+                            <p class="container_subscribe_status" hidden [hidden]="!subscribeOk" [text]="'Готово! Бонусы и промокоды придут на ' + email"></p>
+                        </div>
+                    </div>
+
+                    <div class="container_subscribe_action">
+                        <button class="btn btn_red container_subscribe_submit" type="button"
+                                on="tap:AMP.setState({subscribeTried: true, subscribeOk: (email || '').indexOf('@') > 0 && (email || '').split('@').length == 2 && (email || '').split('@')[1].indexOf('.') > 0})">Подписаться</button>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="container_toc" aria-label="Содержание страницы">
+                <p  class="container_toc_title" >Содержание</p>
+                <ol class="container_toc_list">
+                    <li><a href="#official">Официальный сайт Риобет</a></li>
+                    <li><a href="#play">Во что поиграть на деньги?</a></li>
+                    <li><a href="#bonuses-promo">Бонусы и промокоды на сегодня</a></li>
+                    <li><a href="#faq">Ответы на вопросы</a></li>
+                </ol>
+            </nav>
+
+            <p>
+                С учетом того факта, что сегодня существует возможность играть в слоты и рулетку в режиме онлайн, стоит сделать обзор сайта казино РиоБет. Ведь это лицензированное заведение с большим ассортиментом развлечений. В 2014 году площадка с азартным софтом была открыта для пользователей из стран СНГ. К тому же, с тех пор компания строго придерживается правилам лицензиаста, постоянно стимулирует игроков к соблюдению всех требований клуба и поощряет свои аудитории за счет бонус-кодов, купонов, розыгрыша джекпотов.
+            </p>
+
+            <p>
+                К середине 2026 года в казино Рио Бет доступны софты российских и зарубежных провайдеров, турнирные соревнования, круглосуточный саппорт, грамотно организованный десктопный вариант официального сайта с мобильной версией, а также приложение, автоматически подстраивающийся под любые размеры экранов современных гаджетом (планшетов, смартфонов, айпадов).
+            </p>
+
+            <div class="wrapper_table">
+                <div class="container_table" role="table" aria-label="Основные характеристики онлайн-казино Riobet">
+                    <div class="container_table_row" role="row">
+                        <div class="container_table_th" role="rowheader"><div class="container_table_cell">Старт проекта</div></div>
+                        <div class="container_table_td" role="cell"><div class="container_table_cell container_table_cell_head">2014 год</div></div>
+                    </div>
+                    <div class="container_table_row" role="row">
+                        <div class="container_table_th" role="rowheader"><div class="container_table_cell">Аудитория</div></div>
+                        <div class="container_table_td" role="cell"><div class="container_table_cell">Игроки из Kazakhstan, Moldova, Belarus, Armenia, Russia, Ukraine, Croatia, Serbia</div></div>
+                    </div>
+                    <div class="container_table_row" role="row">
+                        <div class="container_table_th" role="rowheader"><div class="container_table_cell">E-mail</div></div>
+                        <div class="container_table_td" role="cell"><div class="container_table_cell">support@riobet.com</div></div>
+                    </div>
+                    <div class="container_table_row" role="row">
+                        <div class="container_table_th" role="rowheader"><div class="container_table_cell">Skype</div></div>
+                        <div class="container_table_td" role="cell"><div class="container_table_cell">riosupport</div></div>
+                    </div>
+                    <div class="container_table_row" role="row">
+                        <div class="container_table_th" role="rowheader"><div class="container_table_cell">Tel</div></div>
+                        <div class="container_table_td" role="cell"><div class="container_table_cell">+372 602 79 83</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                Все зарегистрированные игроки имеют право пользоваться всеми играми на сайте, свободно пополнять счет и выводить деньги, а также общаться с другими пользователями в процессе турниров.
+            </p>
+
+            <span id="official" class="scroll-target" ></span>
+            <h2>
+                Играть в казино Риобет – обзор официального сайта и мобильной версии
+            </h2>
+
+            <p>
+                Игровая площадка от казино RioBet находится на официальном сайте, который предоставит возможность игрокам ознакомиться с подробной информацией о правилах игры и условиях выигрыша. В настоящее время доступны две версии сайта. В новом варианте интерфейс усовершенствованный и преображенный с учетом требований современного пользователя. С учетом отзывов игроков, европейская практика была принята администрацией к сведению. Кроме того, сейчас клуб игр на деньги и рулетку RioBet предлагает отличный официальный ресурс со своим простым меню, лаконичными подразделениями.
+            </p>
+
+            <p  class="container_article_shot">
+                <amp-img src="../img/riobet-glavnaya.webp" width="900" height="450" layout="responsive" alt="Официальный сайт РиоБет" srcset="../img/riobet-glavnaya-800.webp 800w, ../img/riobet-glavnaya.webp 900w" sizes="100%"></amp-img>
+            </p>
+
+            <p>
+                Удобный и структурированный контент, который содержит в себе все необходимое для того, чтобы сделать ваш сайт досуг эффективным. Обзор обновленной версии:
+            </p>
+
+            <ul class="container_article_list">
+                <li>Регистрация и кнопка выполнение входа находятся в правом верхнем углу.</li>
+                <li>Основная папка с игровыми автоматами, live казино, турнирами и бонусами расположена в верхней части основной страницы сайта.</li>
+                <li>В центре будут представлены новые игры, акции, важные новости.</li>
+                <li>Здесь же можно найти поисковую строку, в которой нужно ввести название игры, быстро отсортировав каталог, получить нужный вариант по совпадениям.</li>
+            </ul>
+
+            <p>
+                На сайте размещены списки лучших слотов, а также новые, необычные <a href="#play">аппараты Рио Бет</a> с прогрессивными розыгрышами.
+            </p>
+
+            <p>Содержимое подвала сайта также будет интересно игроку:</p>
+
+            <ul class="container_article_list" >
+                <li>о нас;</li>
+                <li>Ответы на вопросы, новости;</li>
+                <li>партнёрам, политика;</li>
+                <li>Правила игры, конфиденциальность;</li>
+                <li>Бонусные программы, депозиты и вывод;</li>
+                <li>Условия и правила.</li>
+            </ul>
+
+            <p>
+                Услуга предоставляется только для совершеннолетних. Не стоит рассчитывать на обман администрации казино РиоБет. Во время проверки все неточности выявляются автоматически. В случае обнаружения факта мошенничества игроки, которые будут признаны виновными, не смогут получить доступ к играм азартного клуба.
+            </p>
+
+            <span id="play" class="scroll-target"></span>
+            <h2>
+                Играть в автоматы, рулетку или карты от RioBet на реальные деньги
+            </h2>
+
+            <div class="container_article_split">
+                <div class="container_article_split-aside">
+                    <amp-img src="../img/igrat-v-riobet-na-glavnoj.webp" width="350" height="350" layout="responsive" alt="Игровые автоматы Рио Бет"></amp-img>
+                </div>
+
+                <div class="container_article_split-main">
+                    <p class="container_article_lead">
+                        К числу лицензированных заведений, которые предоставляют возможность играть в более чем 1000 разнообразных развлечений различного типа и направленности относится и заведение <a href="#play">РиоБет на деньги</a>, которое имеет хорошую репутацию среди игроков из стран СНГ. Ассортимент исключительно лицензированный софт от известных производителей со всего мира, в том числе NetEnt, Amatic, Microgaming, Betsoft, Playson, Quickspin.
+                    </p>
+
+                    <p>
+                        Не стоит забывать и о таких играх Риобет, которые могут принести вам хорошую прибыль.
+                    </p>
+
+                    <ul class="container_article_list">
+                        <li>
+                            Основная категория игр на сайте – игровые автоматы. С помощью новой версии портала можно найти большой список слотов. Они отличаются количеством барабанов и линиями для ставок, тематикой, звуковым оформлением и графикой. Для того чтобы получить шанс сорвать джекпот, некоторые игроки могут позволить себе риск раунд, а также заработать фриспины. На данный момент в клуб пришло более 1000 аппаратов.
+                        </li>
+                        <li>
+                            Американские, русские, французские <a href="#play">рулетки онлайн</a> и с живыми дилерами.
+                        </li>
+                        <li>Покер, баккара, карточные игры.</li>
+                        <li>
+                            Многочисленные турниры разного уровня с хорошими призовыми фондами и понятными правилами. На сайте в разделе турниров можно найти множество вариантов для новых игроков и опытных гемблеров.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <p>
+                Новинки появляются постоянно – это отличает клуб РиоБет от подобных мест в России, Украине или Казахстане. Я считаю, что это очень выгодное сотрудничество.
+            </p>
+
+            <span id="bonuses-promo" class="scroll-target"></span>
+            <h2>
+                Бонусы за регистрацию от РиоБет – бездепы, фриспины и промокоды
+            </h2>
+
+            <p>
+                Азартные развлечения клуба Рио Бет в 2026 году будут проводить регулярно и бонусы, купоны, <a href="#bonuses-promo">промокоды</a> будут всегда. Это отличная возможность привлечь новых игроков, удержать тех людей, кто уже зарегистрирован и играет в азартные игры. Также есть специальный раздел, где можно найти все актуальные предложения. В разделе «<a href="#bonuses-promo">Бонусы и акции</a>» на главной странице и внизу сайта перечислены все бонусы и акции от Рио-Бет. В этом разделе можно найти все правила, условия, лимиты.
+            </p>
+
+
+
+            <ul class="container_bonuses" aria-label="Бонусы Riobet по статусам">
+
+                <li class="container_bonus">
+                    <amp-img class="container_bonus_info" src="../img/bonus/info.svg?v=5" width="24" height="24" layout="fixed" alt=""></amp-img>
+                    <amp-img class="container_bonus_hero" src="../img/bonus/birthday.webp?v=3" width="190" height="143" layout="responsive" alt=""></amp-img>
+                    <p class="container_bonus_title">День рождения</p>
+                    <ul class="container_bonus_tiers">
+                        <li class="container_bonus_tier container_bonus_tier_muted">
+                            <amp-img class="container_bonus_crown" src="../img/bonus/crown-classic.svg" width="28" height="22" layout="fixed" alt=""></amp-img>
+                            <span>10 $</span>
+                        </li>
+                        <li class="container_bonus_tier container_bonus_tier_muted">
+                            <amp-img class="container_bonus_crown" src="../img/bonus/crown-gold.svg" width="32" height="23" layout="fixed" alt=""></amp-img>
+                            <span>50 $</span>
+                        </li>
+                        <li class="container_bonus_tier">
+                            <amp-img class="container_bonus_crown container_bonus_crown_vip" src="../img/bonus/crown-vip.svg" width="36" height="26" layout="fixed" alt=""></amp-img>
+                            <span>250 $</span>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="container_bonus">
+                    <amp-img class="container_bonus_info" src="../img/bonus/info.svg?v=5" width="24" height="24" layout="fixed" alt=""></amp-img>
+                    <amp-img class="container_bonus_hero" src="../img/bonus/cashback.webp?v=3" width="190" height="143" layout="responsive" alt=""></amp-img>
+                    <p class="container_bonus_title">Кэшбэк</p>
+                    <ul class="container_bonus_tiers">
+                        <li class="container_bonus_tier container_bonus_tier_muted">
+                            <amp-img class="container_bonus_crown" src="../img/bonus/crown-classic.svg" width="28" height="22" layout="fixed" alt=""></amp-img>
+                            <span class="container_bonus_na" role="img" aria-label="нет">✖</span>
+                        </li>
+                        <li class="container_bonus_tier container_bonus_tier_muted">
+                            <amp-img class="container_bonus_crown" src="../img/bonus/crown-gold.svg" width="32" height="23" layout="fixed" alt=""></amp-img>
+                            <span>7%</span>
+                        </li>
+                        <li class="container_bonus_tier">
+                            <amp-img class="container_bonus_crown container_bonus_crown_vip" src="../img/bonus/crown-vip.svg" width="36" height="26" layout="fixed" alt=""></amp-img>
+                            <span>10%</span>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="container_bonus">
+                    <amp-img class="container_bonus_info" src="../img/bonus/info.svg?v=5" width="24" height="24" layout="fixed" alt=""></amp-img>
+                    <amp-img class="container_bonus_hero" src="../img/bonus/nodep.webp?v=3" width="190" height="143" layout="responsive" alt=""></amp-img>
+                    <amp-img class="container_bonus_arrow" src="../img/bonus/arrow-down.png?v=2" width="42" height="37" layout="fixed" alt=""></amp-img>
+                    <ul class="container_bonus_tiers">
+                        <li class="container_bonus_tier container_bonus_tier_muted">
+                            <amp-img class="container_bonus_crown" src="../img/bonus/crown-classic.svg" width="28" height="22" layout="fixed" alt=""></amp-img>
+                            <span>5 $</span>
+                        </li>
+                        <li class="container_bonus_tier container_bonus_tier_muted">
+                            <amp-img class="container_bonus_crown" src="../img/bonus/crown-gold.svg" width="32" height="23" layout="fixed" alt=""></amp-img>
+                            <span>8 $</span>
+                        </li>
+                        <li class="container_bonus_tier">
+                            <amp-img class="container_bonus_crown container_bonus_crown_vip" src="../img/bonus/crown-vip.svg" width="36" height="26" layout="fixed" alt=""></amp-img>
+                            <span>12 $</span>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="container_bonus">
+                    <amp-img class="container_bonus_info" src="../img/bonus/info.svg?v=5" width="24" height="24" layout="fixed" alt=""></amp-img>
+                    <amp-img class="container_bonus_hero" src="../img/bonus/deposit.webp?v=3" width="190" height="143" layout="responsive" alt=""></amp-img>
+                    <p class="container_bonus_title">Депозит</p>
+                    <ul class="container_bonus_tiers">
+                        <li class="container_bonus_tier container_bonus_tier_muted">
+                            <amp-img class="container_bonus_crown" src="../img/bonus/crown-classic.svg" width="28" height="22" layout="fixed" alt=""></amp-img>
+                            <span class="container_bonus_na" role="img" aria-label="нет">✖</span>
+                        </li>
+                        <li class="container_bonus_tier container_bonus_tier_muted">
+                            <amp-img class="container_bonus_crown" src="../img/bonus/crown-gold.svg" width="32" height="23" layout="fixed" alt=""></amp-img>
+                            <span>50%</span>
+                        </li>
+                        <li class="container_bonus_tier">
+                            <amp-img class="container_bonus_crown container_bonus_crown_vip" src="../img/bonus/crown-vip.svg" width="36" height="26" layout="fixed" alt=""></amp-img>
+                            <span>100%</span>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+
+            <p>
+                Для того чтобы получить бонусы на сегодняшний день, можно воспользоваться промокодами для получения фриспинов или подарочными кодами для турниров, а также возможностью стать участником партнерской программы. Лучше всего активировать каждое предложение отдельно.
+            </p>
+
+            <blockquote class="content_note">
+                <p>
+                    В этом списке есть и другие акции, бонусы, которые предлагает онлайн казино Riobet. Если вы являетесь участником группы в Telegram, то можете подписаться на рассылку новостей, следить за обновлениями, чтобы не упустить ничего самого интересного
+                </p>
+            </blockquote>
+
+            <span id="faq" class="scroll-target"></span>
+            <h2>Часто задаваемые вопросы и ответы</h2>
+
+            <div class="container_faq">
+                <div class="container_faq_item">
+                    <h3 class="container_faq_q">Можно ли пользоваться старой версией сайта РиоБет?</h3>
+                    <div class="container_faq_a">
+                        <p>
+                            Да. Функция перехода доступна на главной странице официального сайта, в нижней ее части. Загрузка занимает несколько секунд.
+                        </p>
+                    </div>
+                </div>
+                <div class="container_faq_item">
+                    <h3 class="container_faq_q">Чем грозит повторная регистрация в казино РиоБет?</h3>
+                    <div class="container_faq_a">
+                        <p>
+                            При обнаружении дубля, администрация заблокирует счета игрока-нарушителя. В некоторых ситуациях восстановить доступ будет уже невозможно.
+                        </p>
+                    </div>
+                </div>
+                <div class="container_faq_item">
+                    <h3 class="container_faq_q">Как пройти верификацию?</h3>
+                    <div class="container_faq_a">
+                        <p>
+                            Для верификации нужно перейти в личный кабинет, раздел «Верификация». Будьте готовы присылать копии паспортных страниц.
+                        </p>
+                    </div>
+                </div>
+                <div class="container_faq_item">
+                    <h3 class="container_faq_q">На какой кэшбэк можно рассчитывать и когда?</h3>
+                    <div class="container_faq_a">
+                        <p>
+                            Возврат доступен пользователям со статусом GOLD и выше. GOLD — 7%, VIP — 10% с вейджером Х1. Начисление по итогам календарного месяца, если депозит был проигран.
+                        </p>
+                    </div>
+                </div>
+                <div class="container_faq_item">
+                    <h3 class="container_faq_q">Доступен ли демо-режим игр без регистрации?</h3>
+                    <div class="container_faq_a">
+                        <p>
+                            Да. Практически все игровые автоматы имеют демо-режим, доступный без входа в личный кабинет.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</main>
+<footer class="container_footer">
+    <div class="container_footer_links">
+        <div class="container">
+            <nav class="container_footer_nav" aria-label="Информация">
+                <div class="container_footer_col">
+                    <a href="#games">Слоты</a>
+                    <a href="#live">Live Casino</a>
+                </div>
+                <div class="container_footer_col">
+                    <a href="#bonuses-promo">Бонусы и промокоды</a>
+                    <a href="#howto">Как начать играть</a>
+                </div>
+                <div class="container_footer_col">
+                    <a href="#official">Официальный сайт</a>
+                    <a href="#play">Игра на деньги</a>
+                </div>
+                <div class="container_footer_col">
+                    <a href="#faq">Вопросы и ответы</a>
+                    <a href="#review">Обзор</a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container container_footer_body">
+        <ul class="container_footer_pay" aria-label="Способы оплаты">
+            <li><amp-img src="../img/partners/001-partner.png" width="140" height="78" layout="responsive" alt="Bitcoin"></amp-img></li>
+            <li><amp-img src="../img/partners/002-partner.webp" width="164" height="78" layout="responsive" alt="Tether"></amp-img></li>
+            <li><amp-img src="../img/partners/003-partner.png" width="157" height="78" layout="responsive" alt="Litecoin"></amp-img></li>
+            <li><amp-img src="../img/partners/004-partner.webp" width="242" height="78" layout="responsive" alt="Ethereum"></amp-img></li>
+            <li><amp-img src="../img/partners/005-partner.webp" width="172" height="78" layout="responsive" alt="TRON"></amp-img></li>
+            <li><amp-img src="../img/partners/006-partner.webp" width="162" height="78" layout="responsive" alt="USD Coin"></amp-img></li>
+        </ul>
+
+        <ul class="container_footer_providers" aria-label="Провайдеры">
+            <li><amp-img src="../img/partners/netent-partner.webp" width="114" height="44" layout="responsive" alt="NetEnt"></amp-img></li>
+            <li><amp-img src="../img/partners/amatic.webp" width="158" height="48" layout="responsive" alt="Amatic"></amp-img></li>
+            <li><amp-img src="../img/partners/microgaming.webp" width="180" height="40" layout="responsive" alt="Microgaming"></amp-img></li>
+            <li><amp-img src="../img/partners/betsoft.webp" width="140" height="40" layout="responsive" alt="Betsoft"></amp-img></li>
+            <li><amp-img src="../img/partners/evolution-gaming.webp" width="160" height="40" layout="responsive" alt="Evolution Gaming"></amp-img></li>
+            <li><amp-img src="../img/partners/ainsworth.webp" width="140" height="40" layout="responsive" alt="Ainsworth"></amp-img></li>
+            <li><amp-img src="../img/partners/habanero.webp" width="140" height="40" layout="responsive" alt="Habanero"></amp-img></li>
+            <li><amp-img src="../img/partners/isoftbet.webp" width="140" height="40" layout="responsive" alt="iSoftBet"></amp-img></li>
+            <li><amp-img src="../img/partners/gameart.webp" width="140" height="40" layout="responsive" alt="GameArt"></amp-img></li>
+            <li><amp-img src="../img/partners/evoplay.webp" width="140" height="40" layout="responsive" alt="Evoplay"></amp-img></li>
+            <li><amp-img src="../img/partners/yggdrasilgaming.webp" width="140" height="40" layout="responsive" alt="Yggdrasil"></amp-img></li>
+            <li><amp-img src="../img/partners/endorphina.webp" width="140" height="40" layout="responsive" alt="Endorphina"></amp-img></li>
+            <li><amp-img src="../img/partners/ezugi.webp" width="120" height="40" layout="responsive" alt="Ezugi"></amp-img></li>
+            <li><amp-img src="../img/partners/playson.webp" width="140" height="40" layout="responsive" alt="Playson"></amp-img></li>
+            <li><amp-img src="../img/partners/lucky_streak.webp" width="140" height="40" layout="responsive" alt="Lucky Streak"></amp-img></li>
+            <li><amp-img src="../img/partners/pragmaticplay.webp" width="232" height="100" layout="responsive" alt="Pragmatic Play"></amp-img></li>
+            <li><amp-img src="../img/partners/quickspin.webp" width="140" height="40" layout="responsive" alt="Quickspin"></amp-img></li>
+            <li><amp-img src="../img/partners/egt.webp" width="100" height="40" layout="responsive" alt="EGT"></amp-img></li>
+            <li><amp-img src="../img/partners/tomhorn.webp" width="140" height="40" layout="responsive" alt="Tom Horn"></amp-img></li>
+            <li><amp-img src="../img/partners/playngo.webp" width="140" height="40" layout="responsive" alt="Play'n GO"></amp-img></li>
+            <li><amp-img src="../img/partners/redtiger.webp" width="140" height="40" layout="responsive" alt="Red Tiger"></amp-img></li>
+            <li><amp-img src="../img/partners/Apollo.webp" width="140" height="40" layout="responsive" alt="Apollo Games"></amp-img></li>
+            <li><amp-img src="../img/partners/Authentic-Gaming.webp" width="140" height="40" layout="responsive" alt="Authentic Gaming"></amp-img></li>
+            <li><amp-img src="../img/partners/Big-Time-Gaming.webp" width="140" height="40" layout="responsive" alt="Big Time Gaming"></amp-img></li>
+            <li><amp-img src="../img/partners/Blueprint.webp" width="140" height="40" layout="responsive" alt="Blueprint Gaming"></amp-img></li>
+            <li><amp-img src="../img/partners/Booming-Games.webp" width="140" height="40" layout="responsive" alt="Booming Games"></amp-img></li>
+            <li><amp-img src="../img/partners/Booongo.webp" width="140" height="40" layout="responsive" alt="Booongo"></amp-img></li>
+            <li><amp-img src="../img/partners/Edict.webp" width="140" height="40" layout="responsive" alt="Edict"></amp-img></li>
+            <li><amp-img src="../img/partners/ELK-Studios.webp" width="140" height="40" layout="responsive" alt="ELK Studios"></amp-img></li>
+            <li><amp-img src="../img/partners/High-5-Games.webp" width="140" height="40" layout="responsive" alt="High 5 Games"></amp-img></li>
+            <li><amp-img src="../img/partners/MRSlotty.webp" width="140" height="40" layout="responsive" alt="MrSlotty"></amp-img></li>
+            <li><amp-img src="../img/partners/Nolimit-City.webp" width="140" height="40" layout="responsive" alt="Nolimit City"></amp-img></li>
+            <li><amp-img src="../img/partners/OneXTwoNetwork.webp" width="140" height="40" layout="responsive" alt="OneXTwo"></amp-img></li>
+            <li><amp-img src="../img/partners/Patagonia.webp" width="140" height="40" layout="responsive" alt="Patagonia"></amp-img></li>
+            <li><amp-img src="../img/partners/PGSoft.webp" width="140" height="40" layout="responsive" alt="PG Soft"></amp-img></li>
+            <li><amp-img src="../img/partners/Platipus.webp" width="140" height="40" layout="responsive" alt="Platipus"></amp-img></li>
+            <li><amp-img src="../img/partners/Playtech.webp" width="140" height="40" layout="responsive" alt="Playtech"></amp-img></li>
+            <li><amp-img src="../img/partners/PushGaming.webp" width="140" height="40" layout="responsive" alt="Push Gaming"></amp-img></li>
+            <li><amp-img src="../img/partners/Relax-Gaming.webp" width="140" height="40" layout="responsive" alt="Relax Gaming"></amp-img></li>
+            <li><amp-img src="../img/partners/Spinomenal.webp" width="140" height="40" layout="responsive" alt="Spinomenal"></amp-img></li>
+            <li><amp-img src="../img/partners/Stakelogic.webp" width="140" height="40" layout="responsive" alt="Stakelogic"></amp-img></li>
+            <li><amp-img src="../img/partners/Thunderkick.webp" width="140" height="40" layout="responsive" alt="Thunderkick"></amp-img></li>
+            <li><amp-img src="../img/partners/WACS.webp" width="140" height="40" layout="responsive" alt="We Are Casino"></amp-img></li>
+            <li><amp-img src="../img/partners/Wazdan.webp" width="165" height="65" layout="responsive" alt="Wazdan"></amp-img></li>
+        </ul>
+
+        <div class="container_footer_legal">
+            <p>
+                Riobet.com is operated by RIOTECH N.V., with its registered address at:
+                Heelsumstraat 51, E-Commerce Park, Curacao (license № 8048/JAZ2015-010)
+            </p>
+            <p class="container_footer_rates">
+                1₿ = 47803.00$ 1Ξ = 3560.67$ 1Ł = 188.77$ 1TRX = 0.11$
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+
+<!-- Модальные окна -->
+<amp-lightbox id="login-modal" layout="nodisplay">
+    <div class="games_lightbox">
+        <div class="games_lightbox_window" role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
+            <button class="games_lightbox_close" type="button" on="tap:login-modal.close" aria-label="Закрыть">&times;</button>
+            <h2 class="games_lightbox_title" id="login-modal-title">Вход</h2>
+            <p class="games_lightbox_text">Войдите в аккаунт, чтобы играть на реальные деньги. Если аккаунта ещё нет, пройдите регистрацию.</p>
+            <p class="games_lightbox_note">18+ · Игра связана с риском. Играйте ответственно.</p>
+        </div>
+    </div>
+</amp-lightbox>
+
+<amp-lightbox id="signup-modal" layout="nodisplay">
+    <div class="games_lightbox">
+        <div class="games_lightbox_window" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title">
+            <button class="games_lightbox_close" type="button" on="tap:signup-modal.close" aria-label="Закрыть">&times;</button>
+            <h2 class="games_lightbox_title" id="signup-modal-title">Регистрация</h2>
+            <p class="games_lightbox_text">Создайте аккаунт, чтобы играть на реальные деньги и забрать приветственный бонус.</p>
+            <p class="games_lightbox_note">18+ · Игра связана с риском. Играйте ответственно.</p>
+        </div>
+    </div>
+</amp-lightbox>
+
+<amp-lightbox id="bonus-modal" layout="nodisplay">
+    <div class="games_lightbox">
+        <div class="games_lightbox_window" role="dialog" aria-modal="true" aria-labelledby="bonus-modal-title">
+            <button class="games_lightbox_close" type="button" on="tap:bonus-modal.close" aria-label="Закрыть">&times;</button>
+            <h2 class="games_lightbox_title" id="bonus-modal-title">Забрать бонус</h2>
+            <p class="games_lightbox_text">Чтобы забрать бонус, нужно зарегистрироваться.</p>
+            <p class="games_lightbox_note">18+ · Игра связана с риском. Играйте ответственно.</p>
+        </div>
+    </div>
+</amp-lightbox>
+
+<amp-lightbox id="play-modal" layout="nodisplay">
+    <div class="games_lightbox">
+        <div class="games_lightbox_window" role="dialog" aria-modal="true" aria-labelledby="play-modal-title">
+            <button class="games_lightbox_close" type="button" on="tap:play-modal.close" aria-label="Закрыть">&times;</button>
+            <h2 class="games_lightbox_title" id="play-modal-title">Нужна регистрация</h2>
+            <p class="games_lightbox_text">Чтобы играть на реальные деньги, нужно зарегистрироваться.</p>
+            <p class="games_lightbox_note">18+ · Игра связана с риском. Играйте ответственно.</p>
+        </div>
+    </div>
+</amp-lightbox>
+
+<amp-lightbox id="game-modal" layout="nodisplay">
+    <div class="games_lightbox">
+        <div class="games_lightbox_window" role="dialog" aria-modal="true" aria-labelledby="game-modal-title">
+            <button class="games_lightbox_close" type="button" on="tap:game-modal.close" aria-label="Закрыть">&times;</button>
+            <h2 class="games_lightbox_title" id="game-modal-title">Нужна регистрация</h2>
+            <p class="games_lightbox_text">Чтобы запустить <b [text]="gameName">игру</b>, нужно зарегистрироваться.</p>
+            <p class="games_lightbox_note">18+ · Игра связана с риском. Играйте ответственно.</p>
+        </div>
+    </div>
+</amp-lightbox>
+
+<amp-lightbox id="games-modal" layout="nodisplay">
+    <div class="games_lightbox">
+        <div class="games_lightbox_window" role="dialog" aria-modal="true" aria-labelledby="games-modal-title">
+            <button class="games_lightbox_close" type="button" on="tap:games-modal.close" aria-label="Закрыть">&times;</button>
+            <h2 class="games_lightbox_title" id="games-modal-title">Нужна регистрация</h2>
+            <p class="games_lightbox_text">Чтобы посмотреть все игры, нужно зарегистрироваться.</p>
+            <p class="games_lightbox_note">18+ · Игра связана с риском. Играйте ответственно.</p>
+        </div>
+    </div>
+</amp-lightbox>
+<!-- /Модальные окна -->
+
+</body>
 </html>
