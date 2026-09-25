@@ -191,4 +191,176 @@ const initSlider = (slider) => {
         }
     }
 }
-initSliders();
+
+
+const initGames = () => {
+    const grid = document.getElementById('games-grid');
+
+    if (!grid)  {
+        return;
+    }
+
+    const rest = document.getElementById('games-rest');
+
+    const tiles = Array.from(grid.children);
+
+    if (rest) {
+        Array.from(rest.content.children).forEach((tile) => {
+            tiles.push(tile);
+        });
+    }
+
+    const catBtns = Array.from(document.querySelectorAll('.container_cats_btn'));
+
+    const subBtns = Array.from(document.querySelectorAll('.container_cats_sub'));
+    const drop = document.querySelector('.container_cats_item_drop');
+    const title = document.getElementById('games-title');
+    const showGamesByCategory = (cat, activeBtn, label) => {
+        tiles.forEach((tile) => {
+            const cats = (tile.dataset.cat || '').split(' ');
+            const matched = cats.indexOf(cat) !== -1;
+
+            if (matched && tile.parentNode !== grid) {
+                grid.appendChild(tile);
+            }
+
+            tile.hidden = !matched;
+        });
+
+        catBtns.forEach((catBtn) => {
+            const isActive = catBtn === activeBtn;
+            catBtn.classList.toggle('active', isActive);
+
+            catBtn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+        if (title && label) {
+            title.textContent = label;
+        }
+    };
+
+    const setDropdownOpen = (isOpen) => {
+        if (!drop) {
+            return;
+        }
+
+        drop.classList.toggle('open', isOpen);
+        const toggle = drop.querySelector('.container_cats_toggle');
+
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    };
+
+    catBtns.forEach((catBtn) => {
+        const handleCategoryClick = () => {
+            showGamesByCategory(catBtn.dataset.cat, catBtn, catBtn.dataset.title);
+        };
+
+        catBtn.addEventListener('click', handleCategoryClick);
+    });
+
+    subBtns.forEach((subBtn) => {
+        const handleSubcategoryClick = () => {
+            const toggle = document.querySelector('.container_cats_toggle');
+            showGamesByCategory(
+                subBtn.dataset.cat,
+                toggle,
+                subBtn.dataset.title,
+            );
+            setDropdownOpen(false);
+        };
+
+        subBtn.addEventListener('click', handleSubcategoryClick);
+    });
+
+    if (drop) {
+        const hover = window.matchMedia('(hover: hover)').matches;
+        const toggle = drop.querySelector('.container_cats_toggle');
+        const handleDropdownMouseEnter = () => {
+            setDropdownOpen(true);
+        };
+
+        const handleDropdownMouseLeave = () => {
+            setDropdownOpen(false);
+        };
+        const handleDropdownToggleClick = () => {
+            const opened = drop.classList.contains('open');
+            setDropdownOpen(!opened);
+        };
+
+        if (hover) {
+            drop.addEventListener('mouseenter', handleDropdownMouseEnter);
+            drop.addEventListener('mouseleave', handleDropdownMouseLeave);
+        } else {
+            toggle.addEventListener('click', handleDropdownToggleClick);
+        }
+        const handleDropdownFocusOut = (event) => {
+            if (!drop.contains(event.relatedTarget)) {
+                console.log('focusout');
+                setDropdownOpen(false);
+            }
+        };
+        const handleClickOutside = (event) => {
+            if (!drop.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+
+        const handleEscapeKey = (event) => {
+            if (event.key === 'Escape') {
+                setDropdownOpen(false);
+            }
+        };
+
+
+        drop.addEventListener('focusout', handleDropdownFocusOut);
+
+        document.addEventListener('click', handleClickOutside);
+        document.addEventListener('keydown', handleEscapeKey);
+    }
+
+    showGamesByCategory('popular', catBtns[0], catBtns[0].dataset.title);
+};
+const keepFocusInsideModal = (event, modal) => {
+    if (event.key !== 'Tab') {
+        return;
+    }
+
+    const focusable = modal.querySelectorAll('button, a[href]');
+
+    if (!focusable.length) {
+        return;
+    }
+
+    const firstEl = focusable[0];
+    const lastEl = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === firstEl) {
+        event.preventDefault();
+        lastEl.focus();
+    } else if (!event.shiftKey && document.activeElement === lastEl) {
+        event.preventDefault();
+        firstEl.focus();
+    }
+};
+//let lockCount = 0;
+// const lockPageScroll = () => {
+//     if (lockCount === 0) {
+//         const gap = window.innerWidth - document.documentElement.clientWidth;
+//         document.documentElement.style.setProperty('--scroll-lock-gap', `${gap}px`);
+//         document.body.classList.add('scroll-lock');
+//     }
+//
+//     lockCount += 1;
+// };
+// const unlockPageScroll = () => {
+//     lockCount = Math.max(0, lockCount - 1);
+//
+//     if (lockCount === 0) {
+//         document.body.classList.remove('scroll-lock');
+//         document.documentElement.style.removeProperty('--scroll-lock-gap');
+//     }
+// };
+
+
+initSlider();
+initGames()

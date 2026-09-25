@@ -107,6 +107,306 @@
             </div>
         </section>
 
+
+        <section id="games" aria-labelledby="games-title">
+            <div class="container">
+                <div class="container_games_inner">
+                    <div role="tablist" aria-label="Категории игр">
+                        <ul class="container_cats_list">
+                            <li class="container_cats_item">
+                                <button class="btn btn_gold btn_block container_cats_btn active" type="button"
+                                        role="tab" data-cat="popular" data-title="Топ слоты">Популярные
+                                </button>
+                            </li>
+                            <li class="container_cats_item">
+                                <button class="btn btn_gold btn_block container_cats_btn" type="button" role="tab"
+                                        data-cat="slots" data-title="Слоты">Слоты
+                                </button>
+                            </li>
+                            <li class="container_cats_item container_cats_item_drop">
+                                <button class="btn btn_gold btn_block container_cats_btn container_cats_toggle"
+                                        type="button" role="tab" data-cat="live" data-title="Live Casino"
+                                        aria-expanded="false">Live Casino
+                                </button>
+                                <ul class="container_cats_drop">
+                                    <li>
+                                        <button class="btn container_cats_sub" type="button" data-cat="tables"
+                                                data-title="Покер и столы">Poker
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="btn container_cats_sub" type="button" data-cat="roulette"
+                                                data-title="Рулетка">Roulette
+                                        </button>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="container_cats_item">
+                                <button class="btn btn_gold btn_block container_cats_btn" type="button" role="tab"
+                                        data-cat="tables" data-title="Настольные игры">Настольные
+                                </button>
+                            </li>
+                            <li class="container_cats_item">
+                                <button class="btn btn_gold btn_block container_cats_btn" type="button" role="tab"
+                                        data-cat="roulette" data-title="Рулетка">Рулетка
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <h2 class="container_games_title" id="games-title">Топ слоты</h2>
+
+                    <div id="games-panel" role="tabpanel" aria-labelledby="games-title">
+                        <ul class="container_games_grid" id="games-grid">
+                            <li class="item_game" data-cat="popular">
+                                <button class="item_game_btn" type="button" data-game="Hot Fruits 100"
+                                        data-provider="Amatic">
+                                    <img src="img/slots/hot-fruits-100.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Hot Fruits 100 — Amatic"
+                                         srcset="img/slots/hot-fruits-100-240.webp 240w, img/slots/hot-fruits-100.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                     </span>
+                                    <span class="visually-hidden">Играть в Hot Fruits 100</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="popular">
+                                <button class="item_game_btn" type="button" data-game="Aztec Sun"
+                                        data-provider="Amatic">
+                                    <img src="img/slots/aztec-sun-hold-and-sun.webp" width="390" height="260"
+                                         loading="lazy" decoding="async" alt="Aztec Sun — Amatic"
+                                         srcset="img/slots/aztec-sun-hold-and-sun-240.webp 240w, img/slots/aztec-sun-hold-and-sun.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Aztec Sun</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="popular">
+                                <button class="item_game_btn" type="button" data-game="Book of Ra"
+                                        data-provider="Novomatic">
+                                    <img src="img/slots/book-of-ra.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Book of Ra — Novomatic"
+                                         srcset="img/slots/book-of-ra-240.webp 240w, img/slots/book-of-ra.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                     </span>
+                                    <span class="visually-hidden">Играть в Book of Ra</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="popular">
+                                <button class="item_game_btn" type="button" data-game="Burning Hot" data-provider="EGT">
+                                    <img src="img/slots/burning-hot.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Burning Hot — EGT"
+                                         srcset="img/slots/burning-hot-240.webp 240w, img/slots/burning-hot.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                         <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                     </span>
+                                    <span class="visually-hidden">Играть в Burning Hot</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="popular">
+                                <button class="item_game_btn" type="button" data-game="Razor Shark"
+                                        data-provider="Push Gaming">
+                                    <img src="img/slots/razor-shark.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Razor Shark — Push Gaming"
+                                         srcset="img/slots/razor-shark-240.webp 240w, img/slots/razor-shark.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                     </span>
+                                    <span class="visually-hidden">Играть в Razor Shark</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="popular">
+                                <button class="item_game_btn" type="button" data-game="Book of Dead"
+                                        data-provider="Play’n GO">
+                                    <img src="img/slots/book-of-dead.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Book of Dead — Play’n GO"
+                                         srcset="img/slots/book-of-dead-240.webp 240w, img/slots/book-of-dead.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Book of Dead</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="tables">
+                                <button class="item_game_btn" type="button" data-game="Immersive Roulette"
+                                        data-provider="Evolution">
+                                    <img src="img/live/immersive-evo.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Immersive Roulette — Evolution"
+                                         srcset="img/live/immersive-evo-240.webp 240w, img/live/immersive-evo.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Immersive Roulette</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="tables">
+                                <button class="item_game_btn" type="button" data-game="Grand Live Roulette"
+                                        data-provider="Evolution">
+                                    <img src="img/live/grand-live-roulette.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Grand Live Roulette — Evolution"
+                                         srcset="img/live/grand-live-roulette-240.webp 240w, img/live/grand-live-roulette.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Grand Live Roulette</span>
+                                </button>
+                            </li>
+                        </ul>
+                        <template id="games-rest">
+                            <li class="item_game" data-cat="slots">
+                                <button class="item_game_btn" type="button" data-game="Lucky Streak 3"
+                                        data-provider="Endorphina">
+                                    <img src="img/slots/lucky-streak-3.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Lucky Streak 3 — Endorphina"
+                                         srcset="img/slots/lucky-streak-3-240.webp 240w, img/slots/lucky-streak-3.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                      <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                     </span>
+                                    <span class="visually-hidden">Играть в Lucky Streak 3</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="slots">
+                                <button class="item_game_btn" type="button" data-game="Resident"
+                                        data-provider="Igrosoft">
+                                    <img src="img/slots/resident.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Resident — Igrosoft"
+                                         srcset="img/slots/resident-240.webp 240w, img/slots/resident.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                         <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                     </span>
+                                    <span class="visually-hidden">Играть в Resident</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="slots">
+                                <button class="item_game_btn" type="button" data-game="Fruit Cocktail"
+                                        data-provider="Igrosoft">
+                                    <img src="img/slots/fruit-cocktail.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Fruit Cocktail — Igrosoft"
+                                         srcset="img/slots/fruit-cocktail-240.webp 240w, img/slots/fruit-cocktail.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                         <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Fruit Cocktail</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="tables">
+                                <button class="item_game_btn" type="button" data-game="Gonzo’s Quest Megaways"
+                                        data-provider="Red Tiger">
+                                    <img src="img/slots/gonzos-quest.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Gonzo’s Quest Megaways — Red Tiger"
+                                         srcset="img/slots/gonzos-quest-240.webp 240w, img/slots/gonzos-quest.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Gonzo’s Quest Megaways</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="live">
+                                <button class="item_game_btn" type="button" data-game="Lightning Roulette"
+                                        data-provider="Evolution">
+                                    <img src="img/live/lighting-roulette-icon.webp" width="390" height="260"
+                                         loading="lazy" decoding="async" alt="Lightning Roulette — Evolution"
+                                         srcset="img/live/lighting-roulette-icon-240.webp 240w, img/live/lighting-roulette-icon.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Lightning Roulette</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="live">
+                                <button class="item_game_btn" type="button" data-game="Blaze Roulette"
+                                        data-provider="Evolution">
+                                    <img src="img/live/blaze-roulette.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Blaze Roulette — Evolution"
+                                         srcset="img/live/blaze-roulette-240.webp 240w, img/live/blaze-roulette.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Blaze Roulette</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="roulette">
+                                <button class="item_game_btn" type="button" data-game="Roulette Russian"
+                                        data-provider="Evolution">
+                                    <img src="img/live/roulette-russian-evo.webp" width="390" height="260"
+                                         loading="lazy" decoding="async" alt="Roulette Russian — Evolution"
+                                         srcset="img/live/roulette-russian-evo-240.webp 240w, img/live/roulette-russian-evo.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Roulette Russian</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="live">
+                                <button class="item_game_btn" type="button" data-game="Ruleta del Sol"
+                                        data-provider="Evolution"
+                                >
+                                    <img src="img/live/ruleta-del-sol-icon.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Ruleta del Sol — Evolution"
+                                         srcset="img/live/ruleta-del-sol-icon-240.webp 240w, img/live/ruleta-del-sol-icon.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Ruleta del Sol</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="roulette">
+                                <button class="item_game_btn" type="button" data-game="Auto Roulette"
+                                        data-provider="Evolution">
+                                    <img src="img/live/auto-roulette-evo.webp" width="390" height="260" loading="lazy"
+                                         decoding="async" alt="Auto Roulette — Evolution"
+                                         srcset="img/live/auto-roulette-evo-240.webp 240w, img/live/auto-roulette-evo.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Auto Roulette</span>
+                                </button>
+                            </li>
+                            <li class="item_game" data-cat="roulette">
+                                <button class="item_game_btn" type="button" data-game="Casino Floor Roulette"
+                                        data-provider="Evolution">
+                                    <img src="img/live/casino-floor-live-roulette.webp" width="390" height="260"
+                                         loading="lazy" decoding="async" alt="Casino Floor Roulette — Evolution"
+                                         srcset="img/live/casino-floor-live-roulette-240.webp 240w, img/live/casino-floor-live-roulette.webp 390w"
+                                         sizes="(min-width: 900px) 25vw, (min-width: 600px) 33vw, 50vw">
+                                    <span class="item_game_play" aria-hidden="true">
+                                        <img src="img/icons/play.svg" width="20" height="22" alt="">
+                                    </span>
+                                    <span class="visually-hidden">Играть в Casino Floor Roulette</span>
+                                </button>
+                            </li>
+                        </template>
+
+                    </div>
+
+                    <div class="container_games_more">
+                        <button class="btn btn_gold btn_block" type="button" data-modal="games-modal">Смотреть все
+                            игры
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
     <script src="./script/script.js" defer></script>
     </body>

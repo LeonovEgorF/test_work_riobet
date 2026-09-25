@@ -513,6 +513,196 @@ body.scroll-lock .container_nav {
     }
 }
 
+
+/* SLOTS */
+
+.container_games_inner {
+    padding: 32px 10px 0;
+}
+
+.container_cats_list {
+    margin: 0;
+    flex-direction: column;
+    gap: 10px;
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.container_cats_item {
+    min-width: 0;
+    position: relative;
+    flex: 1 1 0;
+}
+
+.container_cats_btn {
+    opacity: 0.88;
+}
+
+.container_cats_btn:hover,
+.container_cats_btn.active {
+    opacity: 1;
+}
+
+.container_cats_btn.active {
+    background: var(--gold-hi);
+}
+
+.container_cats_item_drop::after {
+    margin-top: -11px;
+    transition: transform var(--ease);
+    background: url("../img/icons/arrow-down-sign-to-navigate.png") center / 30px 30px
+    no-repeat;
+    width: 30px;
+    pointer-events: none;
+    content: "";
+    height: 30px;
+    top: 50%;
+    right: 16px;
+    position: absolute;
+}
+
+.container_cats_item_drop.open::after {
+    transform: rotate(178deg);
+}
+
+.container_cats_drop {
+    list-style: none;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    top: 100%;
+    padding: 5px;
+    flex-direction: column;
+    position: absolute;
+    display: none;
+    background: #000;
+    gap: 3px;
+    margin: 0;
+    border: 1px solid var(--gold);
+}
+
+.container_cats_drop::before {
+    left: 0;
+    right: 0;
+    top: -8px;
+    position: absolute;
+    content: "";
+    height: 8px;
+}
+
+.container_cats_item_drop.open .container_cats_drop {
+    display: flex;
+}
+
+.container_cats_sub {
+    color: var(--gold);
+    background: transparent;
+    width: 100%;
+    display: flex;
+}
+
+.container_cats_sub:hover {
+    color: var(--gold);
+    background: rgba(237, 201, 127, 0.12);
+}
+
+.container_games_live .container_games_inner {
+    padding-top: 0;
+}
+
+.container_games_title,
+.container_winners_title,
+.container_jackpot_title,
+.container_howto_heading {
+    color: #fff;
+    margin: 0;
+    padding: 32px 0;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.container_games_grid {
+    list-style: none;
+    display: grid;
+    padding: 0;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0;
+    gap: 3px;
+}
+
+.item_game[hidden] {
+    display: none;
+}
+
+.item_game_btn {
+    cursor: pointer;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    display: block;
+    padding: 0;
+    border: 0;
+}
+
+.item_game_btn > img {
+    width: 100%;
+    display: block;
+    transition: filter 0.25s ease, transform 0.25s ease;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+}
+
+.item_game_play {
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease,
+    background-color var(--ease);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+    width: 56px;
+    display: flex;
+    height: 56px;
+    align-items: center;
+    position: absolute;
+    background: var(--green);
+    transform: translate(-50%, -50%) scale(0.75);
+    justify-content: center;
+}
+
+.item_game_play img {
+    margin-left: 3px;
+    width: 20px;
+    height: 22px;
+    display: block;
+    object-fit: contain;
+}
+
+.item_game_btn:is(:hover, :focus-visible) > img {
+    filter: blur(4px) brightness(0.55);
+    transform: scale(1.04);
+}
+
+.item_game_btn:is(:hover, :focus-visible) .item_game_play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.item_game_btn:hover .item_game_play {
+    background: var(--green-hi);
+}
+
+.container_games_more {
+    padding: 32px 0 0;
+}
+
+.container_games_more .btn {
+    margin: 0 auto;
+    max-width: 100%;
+}
+
 @media (min-width: 600px) {}
 @media (min-width: 720px) {}
 @media (min-width: 900px) {}
